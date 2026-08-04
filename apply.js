@@ -235,14 +235,6 @@
     return out + '</ol>';
   }
 
-  function configWarning() {
-    if (CFG().recipientEmail) return '';
-    return '<div class="notice warn">' +
-      '<strong>This form is not connected yet.</strong> Set <code>apply.recipientEmail</code> in <code>data.js</code> ' +
-      'to the address that should receive applications. Until then the form can be filled in but not submitted.' +
-      '</div>';
-  }
-
   function formPage(preselectId) {
     var cfg = CFG();
     var action = cfg.recipientEmail ? cfg.endpointBase + cfg.recipientEmail : '';
@@ -263,7 +255,6 @@
       '</section>' +
 
       '<section class="container apply-wrap" style="padding-bottom:clamp(50px,6vw,80px)">' +
-        configWarning() +
         stepper() +
         '<div class="progress"><div class="bar" id="progBar"></div></div>' +
         '<p class="progress-note" id="progNote">Step 1 of ' + STEPS.length + '</p>' +
@@ -285,7 +276,7 @@
           '<div class="form-nav">' +
             '<button type="button" class="btn btn-ghost" id="btnBack" hidden>← Back</button>' +
             '<button type="button" class="btn btn-primary" id="btnNext">Continue →</button>' +
-            '<button type="submit" class="btn btn-primary" id="btnSubmit" hidden' + (action ? '' : ' disabled') + '>Submit application →</button>' +
+            '<button type="submit" class="btn btn-primary" id="btnSubmit" hidden>Submit application →</button>' +
             '<button type="button" class="btn-clear" id="btnClear">Clear saved draft</button>' +
           '</div>' +
         '</form>' +
@@ -333,6 +324,11 @@
     var submit = document.getElementById('btnSubmit');
     var errBox = document.getElementById('formError');
     var cur = 0;
+
+    // Setup reminder for whoever is deploying — kept out of the visitor's way.
+    if (!CFG().recipientEmail && window.console && console.warn) {
+      console.warn('[Fortpremium] No application recipient set. Add apply.recipientEmail in data.js — submissions cannot be delivered until you do.');
+    }
 
     /* -- where FormSubmit sends the applicant after posting -- */
     document.getElementById('fNext').value = location.href.split('#')[0] + '#/apply/success';
@@ -591,7 +587,7 @@
     form.addEventListener('submit', function (ev) {
       if (!CFG().recipientEmail) {
         ev.preventDefault();
-        flash('This form has no recipient address configured yet, so it cannot be submitted. Please contact us directly in the meantime.');
+        flash('Sorry — we could not submit your application just now. Please call 080 2388 2300 or use the Contact page. Your answers stay saved on this device.');
         return;
       }
       // validate every step, not just the last one

@@ -53,7 +53,12 @@
 
       var to = recipientFor(kind);
       if (!to) {
-        status(note, 'bad', 'This form is not connected yet — set formEmails in data.js.');
+        // Setup reminder goes to the console, not the visitor.
+        if (window.console && console.warn) {
+          console.warn('[Fortpremium] No recipient for the "' + kind + '" form. Set formEmails.' + kind +
+            ' (or apply.recipientEmail) in data.js.');
+        }
+        status(note, 'bad', 'Sorry, that did not send. Please try again, or call us on 080 2388 2300.');
         return;
       }
 

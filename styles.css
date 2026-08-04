@@ -336,8 +336,6 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .apply-wrap { max-width: 900px; }
 
 .notice { border-radius: 14px; padding: 16px 18px; font-size: 14.5px; line-height: 1.6; margin-bottom: 24px; }
-.notice code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(0, 0, 0, .07); padding: 2px 6px; border-radius: 5px; }
-.notice.warn { background: #fff6e5; border: 1px solid #f3ddb0; color: #6b4e12; }
 .notice.err-summary { background: #fdeceb; border: 1px solid #f5c9c4; color: #8c2c22; margin: 22px 0 0; }
 
 /* stepper */
