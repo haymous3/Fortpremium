@@ -77,7 +77,7 @@ window.SITE_DATA = {
     { id: 'nysc', name: 'NYSC', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/NYSC_LOGO.svg?width=240' },
     { id: 'waec', name: 'WAEC', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Waec_logo.png?width=240' },
     { id: 'neco', name: 'NECO', imgUrl: 'https://upload.wikimedia.org/wikipedia/en/b/bd/Neco_official_banner.jpg' },
-    { id: 'pearson', name: 'Pearson Education Limited', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pearson_Logo_2025.svg?width=320' }
+    { id: 'pearson', name: 'Pearson Education Limited', imgUrl: 'assets/pearson.jpg' }
   ],
 
   clients: [
@@ -139,6 +139,67 @@ window.SITE_DATA = {
     { mark: 'C', title: 'Partnership & Sponsorship', body: 'Partner to sponsor training, support courses, provide scholarships, donate learning gadgets, or co-create high-impact programmes.', cta: 'Partner With Us', color: '#f5a623' },
     { mark: 'D', title: 'Collaborate With Us', body: 'Reach out for community collaborations, institutional training requests, media opportunities, or new ideas that unlock access and innovation.', cta: 'Start a Conversation', color: '#ff6a4d' }
   ],
+
+  /* ---------------------------------------------------------------
+     APPLICATION FORM (#/apply)
+     ---------------------------------------------------------------
+     >>> BEFORE GOING LIVE: set `recipientEmail` below to the address
+         that should receive applications, e.g. 'admissions@fortpremium.com'.
+         While it is empty the form shows a notice and refuses to submit
+         (so no one fills it in and loses their answers).
+
+     Delivery uses FormSubmit.co — free, no account, no API key.
+     The FIRST submission triggers a one-time activation email to
+     `recipientEmail`; click the link in it and every later submission
+     arrives automatically. Nothing is delivered before you activate.
+     --------------------------------------------------------------- */
+  apply: {
+    recipientEmail: '',
+    endpointBase: 'https://formsubmit.co/',
+    maxPhotoMB: 2,
+
+    genders: ['Female', 'Male', 'Prefer not to say'],
+
+    qualifications: [
+      'Still in secondary school',
+      'SSCE / WAEC / NECO',
+      'OND (Ordinary National Diploma)',
+      'NCE (Nigeria Certificate in Education)',
+      'HND (Higher National Diploma)',
+      "Bachelor's degree (B.Sc / B.A / B.Eng)",
+      'PGD (Postgraduate Diploma)',
+      "Master's degree (M.Sc / M.A)",
+      'Doctorate (PhD)',
+      'Other'
+    ],
+
+    experienceLevels: [
+      { value: 'Complete beginner', note: 'I have never written code or used professional tech tools.' },
+      { value: 'Beginner', note: 'I have tried a few tutorials or short courses on my own.' },
+      { value: 'Intermediate', note: 'I have built projects and can work with some guidance.' },
+      { value: 'Advanced', note: 'I work in tech already and want to specialise further.' }
+    ],
+
+    laptopOptions: [
+      { value: 'Yes — I own a personal laptop', note: 'Fully available to me for training.' },
+      { value: 'Shared access', note: 'I can use a laptop belonging to family, work or a friend.' },
+      { value: 'No — I do not have access yet', note: 'I would need Tech Hub or loaner support.' }
+    ],
+
+    learningModes: [
+      { value: 'Online (virtual)', note: 'Live virtual classes I join from home.' },
+      { value: 'On-site (Fortpremium Tech Hub, Magboro)', note: 'In-person sessions at the hub.' },
+      { value: 'Hybrid (online + on-site)', note: 'A mix of virtual classes and hub sessions.' }
+    ],
+
+    // Update these each intake — they populate the "Preferred Cohort" dropdown.
+    cohorts: [
+      'Next available cohort',
+      'September 2026',
+      'January 2027',
+      'May 2027'
+    ]
+  },
 
   jobs: [
     { tag: 'Contract', tagColor: '#3b82f6', location: 'Ogun, Nigeria', title: 'Programmes Supervisor — Bootcamps', body: 'Oversee bootcamp operations, manage curriculum development, and implement student success initiatives across multiple programmes.', pay: '\u20a680,000', type: 'Project-based · pro-rated' },

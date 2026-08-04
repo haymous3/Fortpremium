@@ -29,7 +29,7 @@
           '<div class="hero-tagline">Digital · Innovative · Capacity Development Hub</div>' +
           '<p class="hero-lead">A premier digital, innovative and capacity-development hub defining digital literacy in line with national standards — building Africa\'s next generation of tech leaders.</p>' +
           '<div class="hero-actions">' +
-            '<a class="btn btn-primary" href="' + href('involved') + '">Get Started</a>' +
+            '<a class="btn btn-primary" href="' + href('apply') + '">Get Started</a>' +
             '<a class="btn btn-ghost" href="' + href('programmes') + '">Explore Programmes →</a>' +
           '</div>' +
         '</div>' +
@@ -100,7 +100,7 @@
 
       // CTA
       '<section class="container section-lg">' +
-        '<div class="cta-band"><h2>Ready to get started?</h2><p>Join thousands of young innovators building meaningful tech careers with Fortpremium.</p><a class="btn" href="' + href('involved') + '">Apply to a Programme →</a></div>' +
+        '<div class="cta-band"><h2>Ready to get started?</h2><p>Join thousands of young innovators building meaningful tech careers with Fortpremium.</p><a class="btn" href="' + href('apply') + '">Apply to a Programme →</a></div>' +
       '</section>' +
     '</div>';
   }
@@ -262,7 +262,7 @@
               '<div class="spec"><span class="k">Format</span><span class="v">' + esc(p.format) + '</span></div>' +
               '<div class="spec"><span class="k">Duration</span><span class="v">' + esc(p.duration) + '</span></div>' +
               '<div class="spec"><span class="k">Level</span><span class="v">' + esc(p.level) + '</span></div>' +
-              '<a class="btn" style="background:' + p.color + '" href="' + href('involved') + '">Apply Now →</a>' +
+              '<a class="btn" style="background:' + p.color + '" href="' + href('apply/' + p.id) + '">Apply Now →</a>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -316,7 +316,8 @@
           D.jobs.map(function (j) {
             return '<div class="job">' +
               '<div><div class="meta"><span class="pill-tag" style="background:' + j.tagColor + '">' + esc(j.tag) + '</span><span class="loc">' + esc(j.location) + '</span></div><h3>' + esc(j.title) + '</h3><p>' + esc(j.body) + '</p></div>' +
-              '<div class="apply"><div class="pay">' + esc(j.pay) + '</div><div class="type">' + esc(j.type) + '</div><button class="btn-pill-dark">Apply Now →</button></div>' +
+              // job roles are hired through Contact — the #/apply form is for programme applicants
+              '<div class="apply"><div class="pay">' + esc(j.pay) + '</div><div class="type">' + esc(j.type) + '</div><a class="btn-pill-dark" href="' + href('contact') + '">Apply Now →</a></div>' +
             '</div>';
           }).join('') +
         '</div>' +
@@ -369,9 +370,13 @@
     var view = document.getElementById('view');
     var html;
     if (r.key === 'programme') html = detailPage(r.param);
+    else if (r.key === 'apply' && window.APPLY_FORM) html = window.APPLY_FORM.page(r.param);
     else if (routes[r.key]) html = routes[r.key]();
     else html = homePage();
     view.innerHTML = html;
+
+    // the application form wires up its own events once it is in the DOM
+    if (r.key === 'apply' && window.APPLY_FORM) window.APPLY_FORM.mount();
 
     // highlight active nav
     var activeKey = activeFor[r.key] || r.key;
