@@ -26,7 +26,7 @@ Open `data.js` — every page's text, list items, links and image URLs live ther
 ## Notes on images
 - **Team photos** are local files in `assets/` (offline-safe).
 - **Programme, hero and gallery images** are hotlinked from Unsplash — replace the `src`/`img` URLs in `data.js` with your own hosted images before launch.
-- **Partner logos** (NYSC, WAEC, Pearson) are hotlinked from Wikimedia Commons; **NECO** has no logo yet (shows an empty tile). Swap these for your own logo files in `assets/` and update `data.js`.
+- **Partner logos** (NYSC, WAEC, Pearson) are hotlinked from Wikimedia Commons; **NECO** is hotlinked from Wikipedia (`upload.wikimedia.org`, a non-free logo file). Swap these for your own logo files in `assets/` and update `data.js`.
 
 ## Routes
 `#/home` · `#/about` · `#/team` · `#/programmes` · `#/programme/<id>` · `#/involved` · `#/careers` · `#/contact`

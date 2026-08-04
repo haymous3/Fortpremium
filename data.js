@@ -76,7 +76,7 @@ window.SITE_DATA = {
   partners: [
     { id: 'nysc', name: 'NYSC', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/NYSC_LOGO.svg?width=240' },
     { id: 'waec', name: 'WAEC', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Waec_logo.png?width=240' },
-    { id: 'neco', name: 'NECO', imgUrl: '' },
+    { id: 'neco', name: 'NECO', imgUrl: 'https://upload.wikimedia.org/wikipedia/en/b/bd/Neco_official_banner.jpg' },
     { id: 'pearson', name: 'Pearson Education Limited', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pearson_Logo_2025.svg?width=320' }
   ],
 
