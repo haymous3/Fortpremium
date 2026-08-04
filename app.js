@@ -105,6 +105,15 @@
     '</div>';
   }
 
+  // Reusable "go to the application form" band, dropped at the end of pages
+  // where a visitor is most likely to have decided they want to apply.
+  function applyBand(title, body, label) {
+    return '<section class="container section-lg">' +
+      '<div class="cta-band"><h2>' + esc(title) + '</h2><p>' + esc(body) + '</p>' +
+      '<a class="btn" href="' + href('apply') + '">' + esc(label) + ' →</a></div>' +
+    '</section>';
+  }
+
   function progCard(p) {
     return '<a class="prog-card" href="' + href('programme/' + p.id) + '">' +
       '<div class="prog-media"><img src="' + p.img + '" alt="' + esc(p.name) + '" loading="lazy"/><span class="pill-tag" style="background:' + p.color + '">' + esc(p.tag) + '</span></div>' +
@@ -188,6 +197,7 @@
           '</div>' +
         '</div>' +
       '</section>' +
+      applyBand('Ready to build your digital future?', 'Join a Fortpremium programme and gain the practical, industry-aligned skills employers are hiring for.', 'Apply to a Programme') +
     '</div>';
   }
 
@@ -198,7 +208,7 @@
         '<h1>The Architects of Fortpremium</h1>' +
         '<p class="lead">A leadership team combining technical mastery, creative vision, and a deep commitment to social impact — driving Nigeria\'s digital nation-building agenda.</p>' +
       '</section>' +
-      '<section class="container" style="padding-bottom:clamp(50px,6vw,80px)">' +
+      '<section class="container" style="padding-bottom:clamp(20px,3vw,30px)">' +
         '<div class="team-list">' +
           D.team.map(function (m) {
             var photo = m.img
@@ -216,6 +226,7 @@
           }).join('') +
         '</div>' +
       '</section>' +
+      applyBand('Learn from this team', 'Our programmes are led by the same practitioners you just met, plus a network of industry mentors.', 'Apply to a Programme') +
     '</div>';
   }
 
@@ -226,9 +237,10 @@
         '<h1>Choose your path</h1>' +
         '<p class="lead">Each programme combines practical learning, mentorship, and project experience so learners can move from interest to real career direction.</p>' +
       '</section>' +
-      '<section class="container" style="padding-bottom:clamp(50px,6vw,80px)">' +
+      '<section class="container" style="padding-bottom:clamp(20px,3vw,30px)">' +
         '<div class="prog-grid">' + D.programmes.map(progCardTall).join('') + '</div>' +
       '</section>' +
+      applyBand('Found your path?', 'Applications take about 10 minutes. Tell us where you are now and we will help you choose the right track.', 'Start your application') +
     '</div>';
   }
 
@@ -285,19 +297,35 @@
         '<h1>Choose how you want to support us</h1>' +
         '<p class="lead">Whether you fund training, volunteer your expertise, sponsor a programme, or collaborate with us, every contribution helps build stronger pathways into the tech ecosystem.</p>' +
       '</section>' +
+      // This page is about supporting us, not joining — send would-be learners
+      // to the application form rather than letting them dead-end here.
+      '<section class="container">' +
+        '<div class="learner-note">' +
+          '<div><strong>Want to join a programme yourself?</strong>' +
+          '<span>This page is for supporters and partners. Learners apply here.</span></div>' +
+          '<a class="btn btn-primary btn-sm" href="' + href('apply') + '">Apply to a Programme →</a>' +
+        '</div>' +
+      '</section>' +
       '<section class="container section">' +
         '<div class="involve-grid">' +
           D.involve.map(function (i) {
-            return '<div class="involve"><div class="mark" style="background:' + i.color + '">' + esc(i.mark) + '</div><h3>' + esc(i.title) + '</h3><p>' + esc(i.body) + '</p><span class="cta" style="color:' + i.color + '">' + esc(i.cta) + ' →</span></div>';
+            var cta = i.scrollTo
+              ? '<button type="button" class="cta" data-scroll="' + esc(i.scrollTo) + '" style="color:' + i.color + '">' + esc(i.cta) + ' →</button>'
+              : '<a class="cta" href="' + href(i.route || 'contact') + '" style="color:' + i.color + '">' + esc(i.cta) + ' →</a>';
+            return '<div class="involve"><div class="mark" style="background:' + i.color + '">' + esc(i.mark) + '</div><h3>' + esc(i.title) + '</h3><p>' + esc(i.body) + '</p>' + cta + '</div>';
           }).join('') +
         '</div>' +
       '</section>' +
       '<section class="container section-lg">' +
-        '<div class="volunteer-band">' +
+        '<div class="volunteer-band" id="volunteer">' +
           '<div><h2>Join 100+ volunteers</h2><p>Contributing time, expertise, and support to training programmes across Nigeria\'s six geopolitical zones.</p></div>' +
-          '<form class="form-dark" onsubmit="return false">' +
-            '<input placeholder="Full name"/><input placeholder="Email address" type="email"/>' +
+          '<form class="form-dark" data-fs="volunteers"' +
+            ' data-subject="New volunteer sign-up — Fortpremium website"' +
+            ' data-success="Thank you! We have your details and will be in touch about volunteering." novalidate>' +
+            '<input name="Full Name" aria-label="Full name" placeholder="Full name" autocomplete="name" required/>' +
+            '<input name="email" aria-label="Email address" placeholder="Email address" type="email" autocomplete="email" required/>' +
             '<button type="submit">Join as a Volunteer →</button>' +
+            '<p class="form-status" role="status" aria-live="polite"></p>' +
           '</form>' +
         '</div>' +
       '</section>' +
@@ -339,11 +367,16 @@
             '<div class="card-quiet contact-card"><div class="k">ADDRESS</div><p>First Floor, Oke-Afa Supershoppy Building,<br/>Oke Afa, Magboro, Ogun State, Nigeria.</p></div>' +
             '<div class="card-quiet contact-card"><div class="k">PHONE</div><div class="phones"><span>080 2388 2300</span><span>081 3257 3863</span><span>081 3004 7500</span></div></div>' +
           '</div>' +
-          '<form class="form-light" onsubmit="return false">' +
+          '<form class="form-light" data-fs="general"' +
+            ' data-subject="New contact message — Fortpremium website"' +
+            ' data-success="Thank you — your message has been sent. We will get back to you shortly." novalidate>' +
             '<h3>Send a message</h3>' +
-            '<input placeholder="Full name"/><input placeholder="Email address" type="email"/><input placeholder="Subject"/>' +
-            '<textarea placeholder="Your message" rows="4"></textarea>' +
+            '<input name="Full Name" aria-label="Full name" placeholder="Full name" autocomplete="name" required/>' +
+            '<input name="email" aria-label="Email address" placeholder="Email address" type="email" autocomplete="email" required/>' +
+            '<input name="Subject" aria-label="Subject" placeholder="Subject" required/>' +
+            '<textarea name="Message" aria-label="Your message" placeholder="Your message" rows="4" required></textarea>' +
             '<button type="submit">Send Message →</button>' +
+            '<p class="form-status" role="status" aria-live="polite"></p>' +
           '</form>' +
         '</div>' +
       '</section>' +
@@ -377,6 +410,8 @@
 
     // the application form wires up its own events once it is in the DOM
     if (r.key === 'apply' && window.APPLY_FORM) window.APPLY_FORM.mount();
+    // volunteer / contact forms and any scroll-to CTAs on the new page
+    if (window.SITE_FORMS) window.SITE_FORMS.mount();
 
     // highlight active nav
     var activeKey = activeFor[r.key] || r.key;

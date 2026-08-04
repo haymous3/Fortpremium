@@ -195,10 +195,11 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .amv p { font-size: 17px; line-height: 1.55; margin-top: 14px; }
 .amv.light p { color: #3a3a46; }
 .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-.value { border: 1px solid var(--line); border-radius: 18px; padding: 26px; background: #fff; }
-.value .dot { width: 12px; height: 12px; border-radius: 99px; margin-bottom: 16px; }
-.value h3 { font-size: 19px; }
-.value p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 10px; }
+/* scoped to .values-grid: a bare .value also matches the stat numbers in .stats-band */
+.values-grid .value { border: 1px solid var(--line); border-radius: 18px; padding: 26px; background: #fff; }
+.values-grid .value .dot { width: 12px; height: 12px; border-radius: 99px; margin-bottom: 16px; }
+.values-grid .value h3 { font-size: 19px; }
+.values-grid .value p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 10px; }
 .obj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
 .obj { display: flex; gap: 16px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; }
 .obj .n { flex: none; width: 34px; height: 34px; border-radius: 10px; font-size: 15px; }
@@ -266,12 +267,17 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .other h4 { font-size: 17px; margin-top: 14px; font-family: 'Space Grotesk'; }
 
 /* ---------- get involved ---------- */
+.learner-note { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; background: #f0edff; border: 1px solid #ded5ff; border-radius: 18px; padding: 20px 24px; }
+.learner-note strong { display: block; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 17px; }
+.learner-note span { display: block; color: var(--muted); font-size: 14.5px; line-height: 1.55; margin-top: 4px; }
 .involve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
 .involve { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 32px; display: flex; flex-direction: column; }
 .involve .mark { width: 48px; height: 48px; border-radius: 14px; color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk'; font-weight: 700; font-size: 20px; }
 .involve h3 { font-size: 22px; margin-top: 22px; }
 .involve p { color: var(--muted); font-size: 15px; line-height: 1.65; margin-top: 12px; flex: 1; }
-.involve .cta { font-weight: 700; font-size: 15px; margin-top: 20px; }
+/* rendered as <a> or <button> depending on whether the card routes or scrolls */
+.involve .cta { align-self: flex-start; font-weight: 700; font-size: 15px; margin-top: 20px; background: none; border: none; padding: 0; cursor: pointer; font-family: 'Manrope', system-ui, sans-serif; text-align: left; text-decoration: none; }
+.involve .cta:hover { text-decoration: underline; }
 .volunteer-band { background: var(--ink); color: #fff; border-radius: 28px; padding: clamp(30px, 4vw, 52px); display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; align-items: center; }
 .volunteer-band h2 { font-size: clamp(24px, 3vw, 36px); color: #fff; }
 .volunteer-band p { color: #b6b4c4; margin-top: 14px; font-size: 16px; line-height: 1.6; }
@@ -279,6 +285,17 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .form-dark input { background: #26262f; border: 1px solid #35353f; border-radius: 12px; padding: 14px 16px; color: #fff; font-family: 'Manrope'; font-size: 15px; }
 .form-dark input::placeholder { color: #9a98a8; }
 .form-dark button { border: none; cursor: pointer; background: var(--teal); color: #fff; font-weight: 700; font-size: 15px; padding: 15px; border-radius: 12px; }
+.form-dark button:disabled { opacity: .65; cursor: wait; }
+
+/* inline result message for the volunteer / contact forms */
+.form-status { font-size: 14px; font-weight: 600; line-height: 1.5; margin: 0; }
+.form-status:empty { display: none; }
+.form-status.sending { color: var(--muted); }
+.form-status.ok { color: #0f7a58; }
+.form-status.bad { color: #c0392b; }
+.form-dark .form-status.sending { color: #b6b4c4; }
+.form-dark .form-status.ok { color: #4ade80; }
+.form-dark .form-status.bad { color: #fca5a5; }
 
 /* ---------- careers ---------- */
 .jobs { display: flex; flex-direction: column; gap: 16px; }
@@ -312,6 +329,7 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .form-light textarea { resize: vertical; }
 .form-light button { border: none; cursor: pointer; background: var(--blue); color: #fff; font-weight: 700; font-size: 15px; padding: 15px; border-radius: 12px; }
 .form-light button:hover { background: #2563eb; }
+.form-light button:disabled { opacity: .65; cursor: wait; }
 
 /* ---------- application form (#/apply) ---------- */
 .apply-hero { padding-top: clamp(40px, 5vw, 70px); padding-bottom: clamp(18px, 2.5vw, 30px); }

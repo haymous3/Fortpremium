@@ -8,6 +8,7 @@ Separated static site (HTML + CSS + JS). No build step, no framework.
 - `app.js` — hash-based router + page renderers + mobile menu. No dependencies.
 - `data.js` — all site content (team, programmes, jobs, partners, etc.). Edit copy here.
 - `apply.js` — the multi-step programme application form (`#/apply`).
+- `forms.js` — the short volunteer and contact forms (inline submit, no page reload).
 - `ng-lga.js` — Nigerian states and their 774 LGAs, for the form's State → LGA dropdowns.
 - `assets/` — team photos.
 
@@ -57,8 +58,21 @@ apply: {
   recipientEmail: 'admissions@fortpremium.com',   // <-- set this
 ```
 
-While it is empty the form still renders and can be filled in, but shows a
-notice and refuses to submit — deliberately, so nobody fills in ten minutes of
+This one address also powers the volunteer and contact forms, so setting it
+switches the whole site on. To split them up, set `formEmails` above it:
+
+```js
+formEmails: {
+  volunteers: 'volunteer@fortpremium.com',   // Get Involved sign-up
+  general:    'info@fortpremium.com'         // Contact page messages
+},
+```
+
+Either falls back to `apply.recipientEmail` when left empty. **Every distinct
+address needs its own one-time FormSubmit activation** (see below).
+
+While no address is set the forms still render and can be filled in, but show a
+notice and refuse to submit — deliberately, so nobody fills in ten minutes of
 answers that go nowhere.
 
 ### How delivery works
@@ -82,6 +96,32 @@ endpoint. FormSubmit redirects back to `#/apply/success` afterwards.
 
 To swap in a different provider (Web3Forms, Formspree, your own backend), change
 `endpointBase` in `data.js`; the form posts standard `multipart/form-data`.
+
+## The other two forms
+
+The **volunteer sign-up** (Get Involved) and **message form** (Contact) also go
+through FormSubmit, handled by `forms.js`. They carry no file attachment, so
+they use FormSubmit's AJAX endpoint and report success or failure inline —
+no page reload, and a failed send leaves the visitor's text in the fields.
+
+They need the same one-time activation as the application form. If you point
+them at their own addresses via `formEmails`, activate each one separately.
+
+To add another form anywhere on the site, give it `data-fs`, a `.form-status`
+paragraph, and `name` attributes:
+
+```html
+<form data-fs="general" data-subject="…" data-success="…" novalidate>
+  <input name="Full Name" required/>
+  <input name="email" type="email" required/>
+  <button type="submit">Send</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
+```
+
+Name the email field exactly `email` — FormSubmit uses it as the reply-to
+address, so you can reply straight from your inbox. Field names become the row
+labels in the email you receive, so keep them human-readable.
 
 ### Editing the form
 

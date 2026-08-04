@@ -133,11 +133,13 @@ window.SITE_DATA = {
       points: ['Integrated into the school timetable without disrupting core academics', 'Interactive, hands-on training led by professional instructors on-site', 'Weekend & holiday Tech Hub access for deeper practice', 'Termly assessments with formal grade reports to school management'] }
   ],
 
+  /* Each card's call to action either routes somewhere (`route`) or scrolls to
+     a block further down the same page (`scrollTo`). */
   involve: [
-    { mark: 'A', title: 'Fund the Next Techsters', body: 'Support aspiring developers, data scientists, and tech enthusiasts with access to bootcamps, training programmes, digital tools, and career pathways.', cta: 'Support Tech Training', color: '#7c5cff' },
-    { mark: 'B', title: 'Volunteer With Us', body: 'Join a growing network of 100+ volunteers contributing time, expertise, and support to programmes across Nigeria\u2019s six geopolitical zones.', cta: 'Join as a Volunteer', color: '#14b8a6' },
-    { mark: 'C', title: 'Partnership & Sponsorship', body: 'Partner to sponsor training, support courses, provide scholarships, donate learning gadgets, or co-create high-impact programmes.', cta: 'Partner With Us', color: '#f5a623' },
-    { mark: 'D', title: 'Collaborate With Us', body: 'Reach out for community collaborations, institutional training requests, media opportunities, or new ideas that unlock access and innovation.', cta: 'Start a Conversation', color: '#ff6a4d' }
+    { mark: 'A', title: 'Fund the Next Techsters', body: 'Support aspiring developers, data scientists, and tech enthusiasts with access to bootcamps, training programmes, digital tools, and career pathways.', cta: 'Support Tech Training', color: '#7c5cff', route: 'contact' },
+    { mark: 'B', title: 'Volunteer With Us', body: 'Join a growing network of 100+ volunteers contributing time, expertise, and support to programmes across Nigeria\u2019s six geopolitical zones.', cta: 'Join as a Volunteer', color: '#14b8a6', scrollTo: 'volunteer' },
+    { mark: 'C', title: 'Partnership & Sponsorship', body: 'Partner to sponsor training, support courses, provide scholarships, donate learning gadgets, or co-create high-impact programmes.', cta: 'Partner With Us', color: '#f5a623', route: 'contact' },
+    { mark: 'D', title: 'Collaborate With Us', body: 'Reach out for community collaborations, institutional training requests, media opportunities, or new ideas that unlock access and innovation.', cta: 'Start a Conversation', color: '#ff6a4d', route: 'contact' }
   ],
 
   /* ---------------------------------------------------------------
@@ -153,6 +155,16 @@ window.SITE_DATA = {
      `recipientEmail`; click the link in it and every later submission
      arrives automatically. Nothing is delivered before you activate.
      --------------------------------------------------------------- */
+  /* Recipients for the two short forms — the volunteer sign-up on Get Involved
+     and the message form on Contact. Both fall back to `apply.recipientEmail`
+     below, so setting that one address switches the whole site on. Set these
+     only if those enquiries should go somewhere different.
+     Each address needs its own one-time FormSubmit activation. */
+  formEmails: {
+    volunteers: '',
+    general: ''
+  },
+
   apply: {
     recipientEmail: '',
     endpointBase: 'https://formsubmit.co/',
