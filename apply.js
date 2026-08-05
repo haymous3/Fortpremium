@@ -250,7 +250,7 @@
     return '<div>' +
       '<section class="container page-hero apply-hero">' +
         '<span class="eyebrow" style="color:var(--purple)">APPLICATION</span>' +
-        '<h1>Apply to for a Fortpremium programme</h1>' +
+        '<h1>Apply for a Fortpremium programme</h1>' +
         '<p class="lead">It takes about 10 minutes. Your answers are saved in this browser as you go, so you can close the page and pick up where you left off.</p>' +
       '</section>' +
 
