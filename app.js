@@ -100,7 +100,7 @@
 
       // CTA
       '<section class="container section-lg">' +
-        '<div class="cta-band"><h2>Ready to get started?</h2><p>Join thousands of young innovators building meaningful tech careers with Fortpremium.</p><a class="btn" href="' + href('apply') + '">Apply to a Programme →</a></div>' +
+        '<div class="cta-band"><h2>Ready to get started?</h2><p>Join thousands of young innovators building meaningful tech careers with Fortpremium.</p><a class="btn" href="' + href('apply') + '">Apply for a Programme →</a></div>' +
       '</section>' +
     '</div>';
   }
@@ -182,7 +182,7 @@
           '<div class="partners-grid">' +
             D.partners.map(function (pt) {
               var box = pt.imgUrl
-                ? '<div class="logo-box"><img src="' + pt.imgUrl + '" alt="' + esc(pt.name) + ' logo" loading="lazy"/></div>'
+                ? '<div class="logo-box' + (pt.dark ? ' dark' : '') + '"><img src="' + pt.imgUrl + '" alt="' + esc(pt.name) + ' logo" loading="lazy"/></div>'
                 : '<div class="logo-box empty"></div>';
               return '<div class="partner">' + box + '<div class="name">' + esc(pt.name) + '</div></div>';
             }).join('') +
@@ -222,6 +222,25 @@
                 '<div class="role-pill" style="background:' + m.color + '">' + esc(m.role) + '</div>' +
                 '<div class="team-bio">' + m.bio.map(function (b) { return '<p>' + esc(b) + '</p>'; }).join('') + '</div>' +
               '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</section>' +
+      '<section class="container section">' +
+        '<span class="eyebrow" style="color:var(--teal)">OUR NETWORK</span>' +
+        '<h2 class="partners-title">Our Global Ecosystem Partners</h2>' +
+        '<p class="partners-lead">The practitioners, collaborators, and advocates who extend Fortpremium\'s reach across the wider digital ecosystem.</p>' +
+        '<div class="partner-grid">' +
+          D.ecosystemPartners.map(function (p) {
+            var media = p.img
+              ? '<img src="' + p.img + '" alt="' + esc(p.name) + '" loading="lazy"/>'
+              : '<span class="partner-initials">' + esc(p.initials) + '</span>';
+            // Photoless partners get the colour on the tile itself; photographed
+            // ones keep a neutral backdrop so the image is not tinted while loading.
+            var bg = p.img ? '' : ' style="background:' + p.color + '"';
+            return '<div class="partner-card">' +
+              '<div class="partner-photo"' + bg + '>' + media + '</div>' +
+              '<div class="partner-name">' + esc(p.name) + '</div>' +
             '</div>';
           }).join('') +
         '</div>' +

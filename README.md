@@ -29,7 +29,15 @@ Open `data.js` — every page's text, list items, links and image URLs live ther
 ## Notes on images
 - **Team photos** are local files in `assets/` (offline-safe).
 - **Programme, hero and gallery images** are hotlinked from Unsplash — replace the `src`/`img` URLs in `data.js` with your own hosted images before launch.
-- **Partner logos**: **Pearson** is a local file (`assets/pearson.jpg`); **NYSC** and **WAEC** are hotlinked from Wikimedia Commons; **NECO** is hotlinked from Wikipedia (`upload.wikimedia.org`, a non-free logo file). Swap the hotlinked ones for your own logo files in `assets/` and update `data.js`.
+- **Partner logos**: **Pearson**, **Resource Indeed**, **Kininso Creative** and **Kininso Koncepts** are local files in `assets/`; **NYSC** and **WAEC** are hotlinked from Wikimedia Commons; **NECO** is hotlinked from Wikipedia (`upload.wikimedia.org`, a non-free logo file). Swap the hotlinked ones for your own logo files in `assets/` and update `data.js`.
+  - Set `dark: true` on a partner whose logo comes on a solid black background — the tile is painted black to match, instead of showing a black box on a white card.
+  - Filenames containing spaces must be `%20`-encoded in `data.js` (e.g. `assets/Kinnso%20creative.jpg`).
+
+## Two different "partners"
+`data.js` has **two** separate lists, and they must not share a key name — a duplicate
+key in the same object literal silently overwrites the earlier one:
+- `partners` — institutional logos ("Trusted institutional partners", About page).
+- `ecosystemPartners` — the people in "Our Global Ecosystem Partners" (Team page).
 
 ## Routes
 `#/home` · `#/about` · `#/team` · `#/programmes` · `#/programme/<id>` · `#/involved` · `#/careers` · `#/contact` · `#/apply` · `#/apply/<programme-id>` · `#/apply/success`

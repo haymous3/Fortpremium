@@ -17,10 +17,10 @@ window.SITE_DATA = {
   ],
 
   socials: [
-    { name: 'Facebook', icon: 'f', href: 'https://www.facebook.com/share/19JVXJmRsa/' },
-    { name: 'Instagram', icon: 'IG', href: 'https://www.instagram.com/fortpremiuminternational' },
-    { name: 'TikTok', icon: 'TT', href: 'https://www.tiktok.com/@fortpremium' },
-    { name: 'X (Twitter)', icon: 'X', href: 'https://x.com/fortpremium' }
+    { name: 'Facebook', icon: 'facebook', href: 'https://www.facebook.com/share/19JVXJmRsa/' },
+    { name: 'Instagram', icon: 'instagram', href: 'https://www.instagram.com/fortpremiuminternational' },
+    { name: 'TikTok', icon: 'tiktok', href: 'https://www.tiktok.com/@fortpremium' },
+    { name: 'X (Twitter)', icon: 'x', href: 'https://x.com/fortpremium' }
   ],
 
   images: {
@@ -77,7 +77,12 @@ window.SITE_DATA = {
     { id: 'nysc', name: 'NYSC', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/NYSC_LOGO.svg?width=240' },
     { id: 'waec', name: 'WAEC', imgUrl: 'https://commons.wikimedia.org/wiki/Special:FilePath/Waec_logo.png?width=240' },
     { id: 'neco', name: 'NECO', imgUrl: 'https://upload.wikimedia.org/wikipedia/en/b/bd/Neco_official_banner.jpg' },
-    { id: 'pearson', name: 'Pearson Education Limited', imgUrl: 'assets/pearson.jpg' }
+    { id: 'pearson', name: 'Pearson Education Limited', imgUrl: 'assets/pearson.jpg' },
+    // dark: true — these logos are supplied on a solid black background, so the
+    // tile is painted black to match instead of showing a black box on white.
+    { id: 'resource-indeed', name: 'Resource Indeed Limited', imgUrl: 'assets/Resource%20indeed%20limited.jpg', dark: true },
+    { id: 'kininso-creative', name: 'Kininso Creative Limited', imgUrl: 'assets/Kinnso%20creative.jpg', dark: true },
+    { id: 'kininso-koncepts', name: 'Kininso Koncepts', imgUrl: 'assets/Kinnso%20Koncepts.jpg', dark: true }
   ],
 
   clients: [
@@ -100,6 +105,24 @@ window.SITE_DATA = {
       bio: ['Destiny Ajunam is a creative professional specializing in videography, photography, video editing, and digital content creation. With a foundation in Music and Theatre Arts, Destiny combines visual storytelling and technology to communicate ideas, elevate brands, and create engaging digital experiences.', 'Destiny has extensive experience managing digital platforms and producing high-quality media. Having worked with FortPremium International since 2021, Destiny currently serves as the company\u2019s Digital Strategist.', 'Bringing a unique blend of creative discipline and technical expertise, Destiny excels in teamwork, emotional intelligence, and audience connection — constantly exploring AI-powered tools and emerging media to deliver high-impact results.'] },
     { name: 'Yusuff Mordiyyah Busola', role: 'Administrative Assistant', initials: 'MY', color: '#ec4899', img: 'assets/mordiyyah-yusuff.jpg',
       bio: ['Mordiyyah keeps our daily office operations running seamlessly with her exceptional organizational skills and proactive drive. Combining a strong background in strategic communication with a passion for digital platforms, she excels at drafting polished corporate correspondence, managing internal workflows, and ensuring flawless communication across teams.', 'Known for her collaborative spirit and creative problem-solving energy, Mordiyyah brings a high level of integrity, strict confidentiality, and professional ethics to everything she does. Whether she is managing vital organizational data, mastering digital office tools, or acting as a welcoming first point of contact for stakeholders, she is dedicated to building lasting professional relationships and driving positive organizational impact.'] }
+  ],
+
+  // The people of "Our Global Ecosystem Partners" — distinct from the institutional
+  // logos in `partners` above. Must NOT be named `partners`: a duplicate key in this
+  // object literal silently overwrites the institutional list.
+  // Order here is the display order. `img: null` falls back to an initials tile,
+  // so a partner still appears in sequence until their photo is supplied.
+  ecosystemPartners: [
+    { name: 'Emmanuel Oyerinde', initials: 'EO', color: '#7c5cff', img: 'assets/Partners/Emmanuel%20Oyerinde.jpg' },
+    { name: 'Ola Bankole', initials: 'OB', color: '#ff6a4d', img: 'assets/Partners/Ola%20Bankole.jpg' },
+    { name: 'Samuel Obadina', initials: 'SO', color: '#14b8a6', img: null },
+    { name: 'Mofiyinfoluwa Ajayi', initials: 'MA', color: '#3b82f6', img: 'assets/Partners/Mofiyinfoluwa%20Ajayi.jpg' },
+    { name: 'Elijah Akande', initials: 'EA', color: '#f5a623', img: 'assets/Partners/Elijah%20Akande.jpg' },
+    { name: 'Omowunmi Rasheed', initials: 'OR', color: '#ec4899', img: 'assets/Partners/Omowunmi%20Rasheed.jpg' },
+    { name: 'Racheal Sanni', initials: 'RS', color: '#7c5cff', img: 'assets/Partners/Racheal%20Sanni.jpg' },
+    { name: 'Tijani Oyindamola', initials: 'TO', color: '#ff6a4d', img: null },
+    { name: 'Adebanke Alade', initials: 'AA', color: '#14b8a6', img: 'assets/Partners/Adebanke%20Alade.jpg' },
+    { name: 'Mercy Saliu', initials: 'MS', color: '#3b82f6', img: null }
   ],
 
   programmes: [
