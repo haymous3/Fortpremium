@@ -6,6 +6,9 @@
 :root {
   --purple: #7c5cff;
   --purple-dark: #5a3fe0;
+  --brand: #0504AA;
+  --brand-dark: #03037a;
+  --brand-tint: #e9e9fa;
   --coral: #ff6a4d;
   --pink: #ec4899;
   --teal: #14b8a6;
@@ -55,8 +58,8 @@ main { flex: 1; }
 
 /* ---------- buttons ---------- */
 .btn { border: none; cursor: pointer; font-weight: 700; font-size: 15px; padding: 15px 28px; border-radius: 999px; transition: background .15s, color .15s, border-color .15s; }
-.btn-primary { background: var(--purple); color: #fff; }
-.btn-primary:hover { background: var(--purple-dark); }
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-primary:hover { background: var(--brand-dark); }
 .btn-dark { background: var(--ink); color: #fff; }
 .btn-dark:hover { background: var(--purple); }
 .btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--line-2); }
@@ -75,7 +78,7 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .nav { max-width: var(--container); margin: 0 auto; padding: 14px clamp(18px, 4vw, 40px); display: flex; align-items: center; gap: 24px; }
 .brand { cursor: pointer; display: flex; align-items: center; gap: 10px; margin-right: auto; }
 .brand-badge { height: 40px; width: auto; display: block; flex-shrink: 0; }
-.brand-name { font-family: 'Space Grotesk'; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.brand-name { font-family: 'Space Grotesk'; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; color: var(--brand); }
 .brand-sub { font-size: 10px; letter-spacing: 0.22em; color: var(--muted-2); font-weight: 600; }
 .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); }
 .nav-link { cursor: pointer; font-family: 'Manrope'; font-weight: 600; font-size: 15px; color: #7a7888; transition: color .15s; background: none; border: none; padding: 0; }
@@ -105,10 +108,10 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 
 /* ---------- hero ---------- */
 .hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(30px, 4vw, 56px); align-items: center; padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(30px, 4vw, 50px); }
-.badge-note { display: inline-flex; align-items: center; gap: 8px; background: #f0edff; color: var(--purple-dark); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 999px; margin-bottom: 24px; }
-.badge-note .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--purple); }
+.badge-note { display: inline-flex; align-items: center; gap: 8px; background: var(--brand-tint); color: var(--brand); font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 999px; margin-bottom: 24px; }
+.badge-note .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--brand); }
 .hero h1 { font-size: clamp(38px, 5.5vw, 64px); font-weight: 700; letter-spacing: -0.03em; }
-.hero-tagline { font-family: 'Space Grotesk'; font-weight: 700; font-size: 13px; letter-spacing: 0.16em; color: var(--purple); text-transform: uppercase; margin-top: 16px; }
+.hero-tagline { font-family: 'Space Grotesk'; font-weight: 700; font-size: 13px; letter-spacing: 0.16em; color: var(--brand); text-transform: uppercase; margin-top: 16px; }
 .hero-lead { font-size: clamp(16px, 1.6vw, 19px); color: var(--muted); line-height: 1.6; margin-top: 22px; max-width: 520px; }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
 .hero-media { position: relative; aspect-ratio: 5 / 4; min-height: 300px; }

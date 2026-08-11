@@ -24,9 +24,9 @@
       // hero
       '<section class="container hero">' +
         '<div>' +
-          '<div class="badge-note"><span class="dot"></span>Aligned with Nigeria\'s National Digital Economy Policy</div>' +
-          '<h1>Deliberate &amp; strategic digital impact.</h1>' +
-          '<div class="hero-tagline">Digital · Innovative · Capacity Development Hub</div>' +
+        '<div class="hero-tagline">Digital · Innovative · Capacity Development Hub</div>' +
+        '<h1>Deliberate &amp; strategic digital impact.</h1>' +
+        '<div class="badge-note"><span class="dot"></span>Aligned with Nigeria\'s National Digital Economy Policy</div>' +
           '<p class="hero-lead">A premier digital, innovative and capacity-development hub defining digital literacy in line with national standards — building Africa\'s next generation of tech leaders.</p>' +
           '<div class="hero-actions">' +
             '<a class="btn btn-primary" href="' + href('apply') + '">Get Started</a>' +
