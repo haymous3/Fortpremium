@@ -227,6 +227,23 @@
         '</div>' +
       '</section>' +
       '<section class="container section">' +
+        '<span class="eyebrow" style="color:var(--coral)">ADVISORY TEAM</span>' +
+        '<h2 class="partners-title">Guiding Our Direction</h2>' +
+        '<p class="partners-lead">Senior advisors whose experience in leadership, enterprise, and public service shapes Fortpremium\'s strategy and governance.</p>' +
+        '<div class="partner-grid">' +
+          D.advisors.map(function (a) {
+            var media = a.img
+              ? '<img src="' + a.img + '" alt="' + esc(a.name) + '" loading="lazy"/>'
+              : '<span class="partner-initials">' + esc(a.initials) + '</span>';
+            var bg = a.img ? '' : ' style="background:' + a.color + '"';
+            return '<div class="partner-card">' +
+              '<div class="partner-photo"' + bg + '>' + media + '</div>' +
+              '<div class="partner-name">' + esc(a.name) + '</div>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</section>' +
+      '<section class="container section">' +
         '<span class="eyebrow" style="color:var(--teal)">OUR NETWORK</span>' +
         '<h2 class="partners-title">Our Global Ecosystem Partners</h2>' +
         '<p class="partners-lead">The practitioners, collaborators, and advocates who extend Fortpremium\'s reach across the wider digital ecosystem.</p>' +

@@ -58,26 +58,24 @@ browsers do not allow it.
 
 ### >>> Required before launch
 
-Open `data.js`, find the `apply:` block, and set `recipientEmail` to the address
-that should receive applications:
-
-```js
-apply: {
-  recipientEmail: 'admissions@fortpremium.com',   // <-- set this
-```
-
-This one address also powers the volunteer and contact forms, so setting it
-switches the whole site on. To split them up, set `formEmails` above it:
+Where each form is delivered is set in `data.js`:
 
 ```js
 formEmails: {
-  volunteers: 'volunteer@fortpremium.com',   // Get Involved sign-up
-  general:    'info@fortpremium.com'         // Contact page messages
+  volunteers: 'info@fortpremium.ng',    // Get Involved sign-up
+  general:    'hello@fortpremium.ng'    // Contact page messages
 },
+
+apply: {
+  recipientEmail: 'info@fortpremium.ng',   // Application form
 ```
 
-Either falls back to `apply.recipientEmail` when left empty. **Every distinct
-address needs its own one-time FormSubmit activation** (see below).
+Contact messages go to **hello@**; the forms that collect someone's details —
+the volunteer sign-up and the application form — go to **info@**. Either
+`formEmails` entry falls back to `apply.recipientEmail` when left empty.
+
+**Each distinct address needs its own one-time FormSubmit activation** (see
+below) — so both `hello@` and `info@` must be activated once each.
 
 While no address is set the forms still render and can be filled in, but show a
 notice and refuse to submit — deliberately, so nobody fills in ten minutes of
@@ -88,7 +86,7 @@ answers that go nowhere.
 Submissions go to **[FormSubmit.co](https://formsubmit.co)** — free, no account,
 no API key, no backend to host.
 
-1. Set `recipientEmail` as above and upload the site.
+1. Upload the site with the addresses above set.
 2. Submit the form once yourself. FormSubmit emails that address a one-time
    activation link.
 3. Click the link. From then on every application arrives automatically, with
@@ -112,8 +110,9 @@ through FormSubmit, handled by `forms.js`. They carry no file attachment, so
 they use FormSubmit's AJAX endpoint and report success or failure inline —
 no page reload, and a failed send leaves the visitor's text in the fields.
 
-They need the same one-time activation as the application form. If you point
-them at their own addresses via `formEmails`, activate each one separately.
+They need the same one-time activation as the application form. Because the
+contact form uses `hello@` and the volunteer form uses `info@`, each address
+must be activated separately.
 
 To add another form anywhere on the site, give it `data-fs`, a `.form-status`
 paragraph, and `name` attributes:
