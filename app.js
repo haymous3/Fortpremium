@@ -402,6 +402,7 @@
           '<div class="contact-cards">' +
             '<div class="card-quiet contact-card"><div class="k">ADDRESS</div><p>First Floor, Oke-Afa Supershoppy Building,<br/>Oke Afa, Magboro, Ogun State, Nigeria.</p></div>' +
             '<div class="card-quiet contact-card"><div class="k">PHONE</div><div class="phones"><span>080 2388 2300</span><span>081 3257 3863</span><span>081 3004 7500</span></div></div>' +
+            '<div class="card-quiet contact-card"><div class="k">EMAIL</div><div class="phones"><a href="mailto:hello@fortpremium.ng">hello@fortpremium.ng</a></div></div>' +
           '</div>' +
           '<form class="form-light" data-fs="general"' +
             ' data-subject="New contact message — Fortpremium website"' +
