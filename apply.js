@@ -587,7 +587,7 @@
     form.addEventListener('submit', function (ev) {
       if (!CFG().recipientEmail) {
         ev.preventDefault();
-        flash('Sorry — we could not submit your application just now. Please call 080 2388 2300 or use the Contact page. Your answers stay saved on this device.');
+        flash('Sorry — we could not submit your application just now. Please call +234 802 388 2300 or use the Contact page. Your answers stay saved on this device.');
         return;
       }
       // validate every step, not just the last one

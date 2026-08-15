@@ -58,7 +58,7 @@
           console.warn('[Fortpremium] No recipient for the "' + kind + '" form. Set formEmails.' + kind +
             ' (or apply.recipientEmail) in data.js.');
         }
-        status(note, 'bad', 'Sorry, that did not send. Please try again, or call us on 080 2388 2300.');
+        status(note, 'bad', 'Sorry, that did not send. Please try again, or call us on +234 802 388 2300.');
         return;
       }
 
@@ -86,7 +86,7 @@
         form.reset();
         status(note, 'ok', form.getAttribute('data-success') || 'Thank you — your message has been sent.');
       }).catch(function () {
-        status(note, 'bad', 'Sorry, that did not send. Please try again, or call us on 080 2388 2300.');
+        status(note, 'bad', 'Sorry, that did not send. Please try again, or call us on +234 802 388 2300.');
       }).then(function () {
         if (btn) { btn.disabled = false; btn.textContent = label; }
       });
