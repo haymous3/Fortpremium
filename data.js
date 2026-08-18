@@ -23,6 +23,18 @@ window.SITE_DATA = {
     { name: 'X (Twitter)', icon: 'x', href: 'https://x.com/fortpremium' }
   ],
 
+  /* Anniversary campaign — edit or remove this block to change/retire the badge.
+     Set `show: false` to hide it everywhere without deleting the copy. */
+  anniversary: {
+    show: true,
+    years: '20',
+    pill: 'Celebrating 20 years',
+    span: '2006 – 2026',
+    title: '20 years of building digital capacity',
+    body: 'Two decades on — from our beginnings as Steveaadoy Information Technology and Educational Consult (SITEC) to Fortpremium International today — we are marking 20 years of training, mentoring and equipping young people for the digital economy.',
+    footnote: 'Celebrating 20 years of digital impact.'
+  },
+
   images: {
     hero: { src: 'https://images.unsplash.com/photo-1655720348590-c739c860beed?fm=jpg&q=70&w=1200&auto=format&fit=crop', credit: 'Iwaria Inc.', creditHref: 'https://unsplash.com/@iwaria' },
     aboutWho: { src: 'https://images.unsplash.com/photo-1632215861513-130b66fe97f4?fm=jpg&q=70&w=1200&auto=format&fit=crop', credit: 'Emmanuel Ikwuegbu', creditHref: 'https://unsplash.com/@emmages' }

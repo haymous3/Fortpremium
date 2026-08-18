@@ -15,6 +15,32 @@
   // Route link helper — anchors use hash routing so it works from file://
   function href(route) { return '#/' + route; }
 
+  // Anniversary campaign — driven by D.anniversary (set show:false in data.js to hide)
+  function anniv() {
+    return (D.anniversary && D.anniversary.show) ? D.anniversary : null;
+  }
+  function annivPill() {
+    var a = anniv();
+    if (!a) return '';
+    return '<div class="anniv-pill"><span class="yrs">' + esc(a.years) + '</span>' +
+           '<span class="txt">' + esc(a.pill) + '</span>' +
+           '<span class="yr-span">' + esc(a.span) + '</span></div>';
+  }
+  function annivBand() {
+    var a = anniv();
+    if (!a) return '';
+    return '<section class="container section">' +
+      '<div class="anniv-band">' +
+        '<div class="anniv-mark"><span class="n">' + esc(a.years) + '</span><span class="w">years</span></div>' +
+        '<div class="anniv-copy">' +
+          '<span class="eyebrow">' + esc(a.span) + '</span>' +
+          '<h2>' + esc(a.title) + '</h2>' +
+          '<p>' + esc(a.body) + '</p>' +
+        '</div>' +
+      '</div>' +
+    '</section>';
+  }
+
   /* ---------- page renderers (return HTML strings) ---------- */
 
   function homePage() {
@@ -24,6 +50,7 @@
       // hero
       '<section class="container hero">' +
         '<div>' +
+        annivPill() +
         '<div class="hero-tagline">Digital · Innovative · Capacity Development Hub</div>' +
         '<h1>Deliberate &amp; strategic digital impact.</h1>' +
         '<div class="badge-note"><span class="dot"></span>Aligned with Nigeria\'s National Digital Economy Policy</div>' +
@@ -51,6 +78,9 @@
           '</div>' +
         '</div>' +
       '</section>' +
+
+      // 20th anniversary
+      annivBand() +
 
       // why
       '<section class="container section-lg">' +
@@ -132,6 +162,7 @@
     return '<div>' +
       '<section class="container about-hero" style="padding-top:clamp(40px,5vw,70px);padding-bottom:clamp(20px,3vw,40px)">' +
         '<span class="eyebrow" style="color:var(--purple)">ABOUT US</span>' +
+        annivPill() +
         '<h1>Defining digital literacy in line with national standards</h1>' +
         '<p class="about-lead">We are a premier digital, innovative and capacity-development hub dedicated to redefining what it means to be digitally literate in Nigeria — moving beyond basic skills to high-impact technical education.</p>' +
       '</section>' +
@@ -145,6 +176,8 @@
           '</div>' +
         '</div>' +
       '</section>' +
+
+      annivBand() +
 
       '<section class="container section">' +
         '<div class="amv-grid">' +
