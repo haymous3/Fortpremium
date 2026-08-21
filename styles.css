@@ -23,10 +23,11 @@
   --line: #ece9e1;
   --line-2: #ddd9cf;
   --container: 1220px;
+  --header-h: 70px;
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 18px); }
 body {
   margin: 0;
   background: var(--paper);
@@ -53,7 +54,10 @@ button { font-family: 'Manrope', system-ui, sans-serif; }
 .container { max-width: var(--container); margin: 0 auto; padding-left: clamp(18px, 4vw, 40px); padding-right: clamp(18px, 4vw, 40px); }
 .section { padding-top: clamp(30px, 4vw, 50px); padding-bottom: clamp(30px, 4vw, 50px); }
 .section-lg { padding-top: clamp(40px, 5vw, 70px); padding-bottom: clamp(40px, 5vw, 70px); }
-.page-shell { min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+/* `overflow-x: hidden` here would turn .page-shell into the scroll ancestor of
+   the header and kill `position: sticky`. `clip` hides the same overflow
+   without creating a scroll container. */
+.page-shell { min-height: 100vh; display: flex; flex-direction: column; overflow-x: clip; }
 main { flex: 1; }
 .grid { display: grid; gap: 22px; }
 .eyebrow { font-weight: 700; font-size: 14px; letter-spacing: 0.04em; }
@@ -76,7 +80,19 @@ a.btn:hover, a.btn-pill-dark:hover { color: #fff; }
 a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 
 /* ---------- header / nav ---------- */
-.site-header { position: sticky; top: 0; z-index: 50; background: rgba(251, 250, 247, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251, 250, 247, 0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  transition: box-shadow .2s ease, background .2s ease;
+}
+/* browsers without backdrop-filter get an opaque bar instead of a see-through one */
+@supports not ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  .site-header { background: var(--paper); }
+}
+/* toggled from app.js once the page has scrolled past the top */
+.site-header.is-stuck { background: rgba(251, 250, 247, 0.94); box-shadow: 0 6px 24px rgba(26, 26, 36, 0.07); }
 .nav { max-width: var(--container); margin: 0 auto; padding: 14px clamp(18px, 4vw, 40px); display: flex; align-items: center; gap: 24px; }
 .brand { cursor: pointer; display: flex; align-items: center; gap: 10px; margin-right: auto; }
 .brand-badge { height: 40px; width: auto; display: block; flex-shrink: 0; }
@@ -91,12 +107,21 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-menu { display: none; border-top: 1px solid var(--line); background: var(--paper); padding: 6px clamp(18px, 4vw, 40px) 20px; flex-direction: column; }
+.mobile-menu {
+  display: none; border-top: 1px solid var(--line); background: var(--paper);
+  padding: 6px clamp(18px, 4vw, 40px) 20px; flex-direction: column;
+  max-height: calc(100vh - var(--header-h)); overflow-y: auto; overscroll-behavior: contain;
+}
+@supports (height: 100dvh) {
+  .mobile-menu { max-height: calc(100dvh - var(--header-h)); }
+}
 .mobile-menu.open { display: flex; }
 .mobile-menu .nav-link { font-size: 16px; color: #3a3a46; padding: 14px 4px; border-bottom: 1px solid #efece4; text-align: left; }
 .mobile-apply { margin-top: 16px; }
 
 @media (max-width: 899px) {
+  /* the 46px hamburger is taller than the brand badge, so the bar grows a little */
+  :root { --header-h: 76px; }
   .nav-links, .nav-apply { display: none; }
   .hamburger { display: flex; }
 }
@@ -534,6 +559,19 @@ body.no-scroll { overflow: hidden; }
 .notice.err-summary { background: #fdeceb; border: 1px solid #f5c9c4; color: #8c2c22; margin: 22px 0 0; }
 
 /* stepper */
+/* Pinned directly under the site header. The negative inline margin lets the
+   backdrop cover the container gutters, so nothing scrolls through the edges. */
+.step-track {
+  /* the -1px overlap closes the sub-pixel gap the header's fractional
+     height can otherwise leave for content to peek through */
+  position: sticky; top: calc(var(--header-h) - 1px); z-index: 20;
+  background: var(--paper);
+  margin-inline: -12px; padding: 14px 12px 12px;
+  border-radius: 0 0 16px 16px;
+  transition: box-shadow .2s ease;
+}
+/* toggled from app.js once the track reaches the header */
+.step-track.is-stuck { box-shadow: 0 8px 20px -10px rgba(26, 26, 36, 0.22); }
 .stepper { display: flex; list-style: none; margin: 0 0 18px; padding: 0; gap: 6px; }
 .sstep { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 7px; text-align: center; }
 .sstep .bub { width: 32px; height: 32px; border-radius: 99px; display: flex; align-items: center; justify-content: center; font-family: 'Space Grotesk'; font-weight: 700; font-size: 14px; background: #fff; border: 1px solid var(--line-2); color: var(--muted-2); transition: background .2s, color .2s, border-color .2s; }
@@ -645,6 +683,8 @@ body.no-scroll { overflow: hidden; }
 .apply-success .hero-actions { justify-content: center; margin-top: 32px; }
 
 @media (max-width: 640px) {
+  .step-track { padding: 10px 12px 10px; }
+  .stepper { margin-bottom: 12px; }
   .stepper .nm { display: none; }
   .sstep { flex: 1; }
   .rrow { grid-template-columns: 1fr; gap: 2px; }

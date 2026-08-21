@@ -687,6 +687,7 @@
     // close mobile menu on navigation
     closeMenu();
     window.scrollTo({ top: 0 });
+    syncHeader();
   }
 
   /* ---------- mobile menu ---------- */
@@ -703,10 +704,33 @@
     openState(!menu.classList.contains('open'));
   }
 
+  /* ---------- sticky header / step-track shadows ---------- */
+  function syncHeader() {
+    var header = document.querySelector('.site-header');
+    if (header) header.classList.toggle('is-stuck', window.pageYOffset > 8);
+
+    // the apply form's step track pins under the header; shadow it once it lands
+    var track = document.querySelector('.step-track');
+    if (track) {
+      var headerH = header ? header.getBoundingClientRect().height : 0;
+      track.classList.toggle('is-stuck', track.getBoundingClientRect().top <= headerH + 1);
+    }
+  }
+
   /* ---------- boot ---------- */
   function boot() {
     document.getElementById('hamburger').addEventListener('click', toggleMenu);
     window.addEventListener('hashchange', render);
+    window.addEventListener('scroll', syncHeader, { passive: true });
+    syncHeader();
+
+    // tapping the page behind an open mobile menu closes it
+    document.addEventListener('click', function (e) {
+      var menu = document.getElementById('mobileMenu');
+      if (!menu || !menu.classList.contains('open')) return;
+      if (e.target.closest && e.target.closest('.site-header')) return;
+      closeMenu();
+    });
 
     // Delegated, so the deck keeps working after every re-render.
     document.addEventListener('click', function (e) {

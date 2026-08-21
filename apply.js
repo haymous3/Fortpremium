@@ -255,9 +255,13 @@
       '</section>' +
 
       '<section class="container apply-wrap" style="padding-bottom:clamp(50px,6vw,80px)">' +
-        stepper() +
-        '<div class="progress"><div class="bar" id="progBar"></div></div>' +
-        '<p class="progress-note" id="progNote">Step 1 of ' + STEPS.length + '</p>' +
+        // pinned under the site header so the current step stays visible while
+        // the applicant scrolls through a long step
+        '<div class="step-track">' +
+          stepper() +
+          '<div class="progress"><div class="bar" id="progBar"></div></div>' +
+          '<p class="progress-note" id="progNote">Step 1 of ' + STEPS.length + '</p>' +
+        '</div>' +
 
         '<form id="applyForm" class="apply-form" method="POST" enctype="multipart/form-data"' +
           (action ? ' action="' + esc(action) + '"' : '') + ' novalidate>' +
