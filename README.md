@@ -33,6 +33,36 @@ Open `data.js` — every page's text, list items, links and image URLs live ther
   - Set `dark: true` on a partner whose logo comes on a solid black background — the tile is painted black to match, instead of showing a black box on a white card.
   - Filenames containing spaces must be `%20`-encoded in `data.js` (e.g. `assets/Kinnso%20creative.jpg`).
 
+## The 20th anniversary
+
+Everything is driven by the `anniversary` block in `data.js`. Set `show: false`
+there to retire the whole campaign — badge, band, posters and pop-up — without
+deleting the copy.
+
+The four files in `assets/anniversary/` are **campaign posters, not
+photographs**: the words are baked into the pixels and the shapes differ (three
+portrait, one square). So they are not run as an auto-playing carousel — that
+would scroll the same sentence past the visitor four times, in text no search
+engine or screen reader can read and no phone can render legibly. Instead:
+
+- **The band** on Home and About keeps the message as real HTML text and shows
+  the posters as a fanned deck of artwork beside it, with a
+  “View the celebration” button.
+- **A lightbox** opens on click and pages through the posters in the order they
+  are listed in `data.js` (1 → 4) — arrow keys, Esc, dots, wrap-around.
+- **A one-time announcement** appears on a visitor’s first arrival, then never
+  again. It is skipped on `#/apply` so it cannot land on top of a half-filled
+  application form.
+
+To add or reorder posters, drop the file in `assets/anniversary/` and edit the
+`posters` array. Write a real `alt` for each one — it is the only version of
+the poster’s message that Google and a screen reader ever see.
+
+The pop-up remembers its dismissal in `localStorage` under `announce.key`.
+Change that key (e.g. `fp-anniv-2026` → `fp-anniv-2026b`) to show a revised
+announcement to people who already dismissed the old one, or set
+`announce.show: false` to keep the posters but drop the pop-up entirely.
+
 ## Two different "partners"
 `data.js` has **two** separate lists, and they must not share a key name — a duplicate
 key in the same object literal silently overwrites the earlier one:

@@ -32,7 +32,48 @@ window.SITE_DATA = {
     span: '2006 – 2026',
     title: '20 years of building digital capacity',
     body: 'Two decades on — from our beginnings as Steveaadoy Information Technology and Educational Consult (SITEC) to Fortpremium International today — we are marking 20 years of training, mentoring and equipping young people for the digital economy.',
-    footnote: 'Celebrating 20 years of digital impact.'
+    footnote: 'Celebrating 20 years of digital impact.',
+    deckLabel: 'View the celebration',
+
+    /* The celebration artwork, shown in the order listed here (1 → 4).
+       The posters carry their words as pixels, so `alt` is what a screen reader
+       and a search engine actually get — describe each one properly.
+       Drop a file in assets/anniversary/ and add a line to use it. */
+    posters: [
+      {
+        src: 'assets/anniversary/1.jpg',
+        alt: 'Blue and gold poster: 20 Years of Fortpremium International — “Hurray! We are 20 today!” — thanking clients for their trust and staff for their hard work.',
+        caption: 'Hurray — we are 20 today!'
+      },
+      {
+        src: 'assets/anniversary/2.jpg',
+        alt: 'Black and gold poster: 20 Years of Fortpremium International, thanking clients and staff — “we could not have written this 20-year success story without you.”',
+        caption: '20 years of Fortpremium International'
+      },
+      {
+        src: 'assets/anniversary/3.jpg',
+        alt: 'Gold balloon numerals reading 20th Year Anniversary on blue silk, with the message: behind every milestone is a customer who believed.',
+        caption: 'Behind every milestone is someone who believed'
+      },
+      {
+        src: 'assets/anniversary/4.jpg',
+        alt: 'Poster reading “A Massive Thank You!” — 20 years of impact and excellence — thanking family, friends and well-wishers for their anniversary messages.',
+        caption: 'A massive thank you'
+      }
+    ],
+
+    /* First-visit announcement. It appears once per browser and is then
+       remembered; change `key` to show it again to people who dismissed it,
+       or set `show: false` to keep the posters but drop the pop-up. */
+    announce: {
+      show: true,
+      key: 'fp-anniv-2026',
+      eyebrow: 'Hurray — we are 20!',
+      title: 'Fortpremium International turns 20',
+      body: 'From SITEC in 2006 to Fortpremium International today, we are marking two decades of training and equipping young people for the digital economy — and you are part of the story.',
+      cta: 'View the celebration',
+      dismiss: 'Continue to the site'
+    }
   },
 
   images: {

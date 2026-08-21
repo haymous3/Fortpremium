@@ -29,16 +29,211 @@
   function annivBand() {
     var a = anniv();
     if (!a) return '';
+    var ps = annivPosters();
     return '<section class="container section">' +
-      '<div class="anniv-band">' +
+      '<div class="anniv-band' + (ps.length ? ' has-deck' : '') + '">' +
         '<div class="anniv-mark"><span class="n">' + esc(a.years) + '</span><span class="w">years</span></div>' +
         '<div class="anniv-copy">' +
           '<span class="eyebrow">' + esc(a.span) + '</span>' +
           '<h2>' + esc(a.title) + '</h2>' +
           '<p>' + esc(a.body) + '</p>' +
+          (ps.length
+            ? '<button class="anniv-cta" type="button" data-anniv-open="0">' +
+                esc(a.deckLabel || 'View the celebration') +
+                '<span class="n">' + ps.length + '</span></button>'
+            : '') +
         '</div>' +
+        annivDeck() +
       '</div>' +
     '</section>';
+  }
+
+  /* ---------- anniversary artwork ----------
+     The files in assets/anniversary/ are campaign posters, not photographs:
+     they carry their message as pixels and come in mixed aspect ratios. So
+     they are shown as artwork — a fanned deck beside the live text — that
+     opens into a lightbox on demand, rather than auto-rotating in a carousel
+     where the same sentence would scroll past four times and none of it would
+     be selectable, searchable or legible on a phone. */
+  function annivPosters() {
+    var a = anniv();
+    return (a && a.posters && a.posters.length) ? a.posters : [];
+  }
+
+  function annivDeck() {
+    var ps = annivPosters();
+    if (!ps.length) return '';
+    return '<div class="anniv-deck">' +
+      ps.map(function (p, i) {
+        return '<button class="anniv-card" type="button" data-anniv-open="' + i + '" ' +
+            'style="--i:' + i + ';--n:' + ps.length + '" ' +
+            'aria-label="Open anniversary artwork ' + (i + 1) + ' of ' + ps.length + '">' +
+          '<img src="' + p.src + '" alt="' + esc(p.alt) + '" loading="lazy"/>' +
+        '</button>';
+      }).join('') +
+    '</div>';
+  }
+
+  /* ---------- artwork lightbox ---------- */
+  var lb = null, lbIndex = 0, lbReturn = null;
+
+  function lbBuild() {
+    if (lb) return lb;
+    var ps = annivPosters();
+    var el = document.createElement('div');
+    el.className = 'anniv-lb';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-label', 'Anniversary artwork');
+    el.hidden = true;
+    el.innerHTML =
+      '<div class="ov-scrim" data-lb-close></div>' +
+      '<div class="anniv-lb-inner">' +
+        '<div class="anniv-lb-bar">' +
+          '<span class="anniv-lb-count" aria-live="polite"></span>' +
+          '<button class="anniv-lb-x" type="button" data-lb-close aria-label="Close">&#10005;</button>' +
+        '</div>' +
+        '<div class="anniv-lb-stage">' +
+          '<button class="anniv-lb-nav prev" type="button" data-lb-step="-1" aria-label="Previous artwork">&#8249;</button>' +
+          '<figure class="anniv-lb-fig"><img alt=""/><figcaption></figcaption></figure>' +
+          '<button class="anniv-lb-nav next" type="button" data-lb-step="1" aria-label="Next artwork">&#8250;</button>' +
+        '</div>' +
+        '<div class="anniv-lb-dots">' +
+          ps.map(function (p, i) {
+            return '<button class="anniv-lb-dot" type="button" data-lb-dot="' + i + '" ' +
+              'aria-label="Artwork ' + (i + 1) + '"></button>';
+          }).join('') +
+        '</div>' +
+      '</div>';
+
+    el.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      if (t.closest('[data-lb-close]')) { lbClose(); return; }
+      var step = t.closest('[data-lb-step]');
+      if (step) { lbGo(lbIndex + Number(step.getAttribute('data-lb-step'))); return; }
+      var dot = t.closest('[data-lb-dot]');
+      if (dot) lbGo(Number(dot.getAttribute('data-lb-dot')));
+    });
+
+    document.body.appendChild(el);
+    lb = el;
+    return el;
+  }
+
+  function lbGo(i) {
+    var ps = annivPosters();
+    if (!ps.length) return;
+    lbIndex = (i % ps.length + ps.length) % ps.length;   // wraps both ways
+    var p = ps[lbIndex];
+    var img = lb.querySelector('.anniv-lb-fig img');
+    img.src = p.src;
+    img.alt = p.alt || '';
+    lb.querySelector('.anniv-lb-fig figcaption').textContent = p.caption || '';
+    lb.querySelector('.anniv-lb-count').textContent = (lbIndex + 1) + ' of ' + ps.length;
+    var dots = lb.querySelectorAll('.anniv-lb-dot');
+    for (var d = 0; d < dots.length; d++) {
+      var on = d === lbIndex;
+      dots[d].classList.toggle('on', on);
+      dots[d].setAttribute('aria-current', on ? 'true' : 'false');
+    }
+    lb.classList.toggle('single', ps.length < 2);
+  }
+
+  function lbOpen(i) {
+    if (!annivPosters().length) return;
+    lbBuild();
+    lbReturn = document.activeElement;
+    lb.hidden = false;
+    document.body.classList.add('no-scroll');
+    lbGo(i || 0);
+    lb.querySelector('.anniv-lb-x').focus();
+  }
+
+  function lbClose() {
+    if (!lb || lb.hidden) return;
+    lb.hidden = true;
+    document.body.classList.remove('no-scroll');
+    if (lbReturn && lbReturn.focus) lbReturn.focus();
+    lbReturn = null;
+  }
+
+  // Keep Tab inside whichever overlay is open, so keyboard users cannot
+  // wander into the page behind it.
+  function trapTab(box, e) {
+    var f = box.querySelectorAll('button, [href], input, select, textarea');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  /* ---------- first-visit anniversary announcement ---------- */
+  var note = null;
+
+  function annivAnnounce() {
+    var a = anniv();
+    var n = a && a.announce;
+    if (!n || !n.show) return;
+    // Never over the application form — nobody wants a pop-up mid-form.
+    if (parseHash().key === 'apply') return;
+    if (seen(n.key)) return;
+
+    var ps = annivPosters();
+    var el = document.createElement('div');
+    el.className = 'anniv-note';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-labelledby', 'annivNoteTitle');
+    el.innerHTML =
+      '<div class="ov-scrim" data-note-close></div>' +
+      '<div class="anniv-note-box">' +
+        '<button class="anniv-note-x" type="button" data-note-close aria-label="Close">&#10005;</button>' +
+        (ps.length ? '<div class="anniv-note-art"><img src="' + ps[0].src + '" alt="' + esc(ps[0].alt) + '"/></div>' : '') +
+        '<div class="anniv-note-copy">' +
+          '<span class="anniv-note-eyebrow">' + esc(n.eyebrow) + '</span>' +
+          '<h2 id="annivNoteTitle">' + esc(n.title) + '</h2>' +
+          '<p class="anniv-note-span">' + esc(a.span) + '</p>' +
+          '<p>' + esc(n.body) + '</p>' +
+          '<div class="anniv-note-actions">' +
+            (ps.length ? '<button class="btn btn-primary" type="button" data-note-view>' + esc(n.cta) + '</button>' : '') +
+            '<button class="btn btn-ghost" type="button" data-note-close>' + esc(n.dismiss) + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    el.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      if (t.closest('[data-note-view]')) { closeNote(n.key); lbOpen(0); return; }
+      if (t.closest('[data-note-close]')) closeNote(n.key);
+    });
+
+    document.body.appendChild(el);
+    note = el;
+    document.body.classList.add('no-scroll');
+    // next frame, so the entrance transition actually runs
+    requestAnimationFrame(function () { el.classList.add('in'); });
+    el.querySelector('.anniv-note-x').focus();
+  }
+
+  function closeNote(key) {
+    if (!note) return;
+    remember(key);
+    var el = note;
+    note = null;
+    el.classList.remove('in');
+    document.body.classList.remove('no-scroll');
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
+  }
+
+  // localStorage throws in private windows and with site data blocked, so a
+  // failed read just means "show it" and a failed write means "show it again".
+  function seen(key) {
+    try { return localStorage.getItem(key) === '1'; } catch (err) { return false; }
+  }
+  function remember(key) {
+    try { localStorage.setItem(key, '1'); } catch (err) { /* nothing we can do */ }
   }
 
   /* ---------- page renderers (return HTML strings) ---------- */
@@ -512,7 +707,31 @@
   function boot() {
     document.getElementById('hamburger').addEventListener('click', toggleMenu);
     window.addEventListener('hashchange', render);
+
+    // Delegated, so the deck keeps working after every re-render.
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      var open = t && t.closest ? t.closest('[data-anniv-open]') : null;
+      if (!open) return;
+      e.preventDefault();
+      lbOpen(Number(open.getAttribute('data-anniv-open')) || 0);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (note) {
+        if (e.key === 'Escape') closeNote(anniv().announce.key);
+        else if (e.key === 'Tab') trapTab(note, e);
+        return;
+      }
+      if (!lb || lb.hidden) return;
+      if (e.key === 'Escape') lbClose();
+      else if (e.key === 'ArrowLeft') lbGo(lbIndex - 1);
+      else if (e.key === 'ArrowRight') lbGo(lbIndex + 1);
+      else if (e.key === 'Tab') trapTab(lb, e);
+    });
+
     render();
+    setTimeout(annivAnnounce, 700);   // let the page paint first
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
