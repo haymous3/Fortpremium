@@ -252,7 +252,80 @@ window.SITE_DATA = {
          FormSubmit emails to that inbox. Until then nothing is delivered. */
   formEmails: {
     volunteers: 'info@fortpremium.ng',
-    general: 'hello@fortpremium.ng'
+    general: 'hello@fortpremium.ng',
+    smartprep: 'fortpremiumforms@gmail.com'     // SmartPrep registration (#/smartprep)
+  },
+
+  /* ---------------------------------------------------------------
+     FortPremium SmartPrep — WAEC / NECO / JAMB prep programme (#/smartprep).
+     It is not a tech track, so it has its own page and its own short
+     registration form instead of going through the #/apply form.
+     Amounts are plain numbers (naira) so the page can format them. */
+  smartprep: {
+    name: 'FortPremium SmartPrep Program',
+    tag: 'WAEC · NECO · JAMB 2027',
+    overview: 'An intensive, tech-driven academic accelerator built to prepare senior secondary students, school certificate holders and admission seekers for total success. SmartPrep fuses core educational excellence with high-fidelity computer-based testing to deliver premium scores in the 2027 WAEC, NECO and JAMB (UTME) examinations.',
+    facts: [
+      { k: 'Timeline', v: '8 months', sub: 'September 2026 – May 2027' },
+      { k: 'Format', v: 'Physical + Digital', sub: 'Intensive, 5 days a week' },
+      { k: 'Exams', v: 'WAEC · NECO · JAMB', sub: '2027 sitting' },
+      { k: 'Tracks', v: 'Science · Art · Commercial', sub: 'Full curriculum coverage' }
+    ],
+
+    perk: {
+      title: 'Early enrolment perk',
+      body: 'Fees are waived for the first 20 applicants, and referral discounts are available — so cost is never the reason a young person misses out.'
+    },
+
+    capabilities: [
+      { title: 'Core Academic Mastery', body: 'Comprehensive curriculum execution across the Science, Art and Commercial tracks.', color: '#0504AA' },
+      { title: 'CBT Interface Speed', body: 'Precision and speed built on custom exam software simulators.', color: '#14b8a6' },
+      { title: 'Advanced Examination Tactics', body: 'Deep familiarity with 15 years of past-question structures.', color: '#ff6a4d' },
+      { title: 'Psychological Readiness', body: 'Complete elimination of exam-day anxiety and structural pressure.', color: '#ec4899' }
+    ],
+
+    roadmap: [
+      { phase: 'Phase 1', title: 'Foundation & Acceleration', when: 'Sept – Dec 2026',
+        body: 'Core syllabus acceleration and concept breakdowns, followed by evening question drills, peer circles and diagnostic tracking.',
+        schedule: [ { t: '8:00 AM – 3:00 PM', d: 'Syllabus & concept sessions' }, { t: '4:00 PM – 6:00 PM', d: 'Drills, peer circles & diagnostics' } ] },
+      { phase: 'Phase 2', title: 'Syllabus Completion & Lab Practicals', when: 'Jan – Feb 2027',
+        body: 'Finalisation of the full exam syllabi alongside immersive laboratory simulations for the science tracks.' },
+      { phase: 'Phase 3', title: 'Ultimate Mock & Exam Simulation', when: 'Mar – Apr 2027',
+        body: 'Full-scale, continuous JAMB CBT simulations and time-management workshops to cement absolute readiness.' }
+    ],
+
+    objectives: [
+      { value: '80%+', label: 'Minimum pass rate with distinctions and credits (A1–C6) for all SSCE candidates' },
+      { value: '280+', label: 'Target UTME score out of 400 for every JAMB candidate' },
+      { value: 'CBT', label: 'Training on high-fidelity software matching the official JAMB portal interface' }
+    ],
+
+    tuition: [
+      { name: 'One-Off Plan', price: 150000, per: 'paid upfront', save: 10000, best: true,
+        detail: 'Pay the full tuition once at entry.' },
+      { name: 'Two-Part Installment', price: 155000, per: 'in two payments', save: 5000,
+        parts: ['₦80,000 at entry', '₦75,000 on the first day of Month 2'] },
+      { name: 'Monthly Plan', price: 20000, per: 'per month × 8 months', save: 0,
+        detail: '₦160,000 over the programme.', note: 'Subject to adjustments' }
+    ],
+
+    adminFees: [
+      { item: 'Registration', amount: 7000 },
+      { item: 'ID Card', amount: 3000 },
+      { item: 'JAMB Past Questions', amount: 7500 },
+      { item: 'SSCE Past Questions', amount: 8500 }
+    ],
+
+    impact: [
+      { title: 'Validated Performance', body: 'Parents receive monthly visual progress analytics showing student growth, structural strengths and the areas that need immediate attention.' },
+      { title: 'Elite Instruction', body: 'Learning is anchored by veteran educators who understand contemporary WAEC marking schemes and their common traps.' },
+      { title: 'Enhanced Inclusion', body: 'Early-enrolment perks (fees waived for the first 20 applicants) and referral discounts break down entry barriers for community youth.' }
+    ],
+
+    // Registration form dropdowns
+    candidateTypes: ['SS3 student', 'SS2 student', 'School certificate holder (resitting)', 'Admission seeker (JAMB only)'],
+    tracks: ['Science', 'Art', 'Commercial'],
+    exams: ['WAEC + NECO + JAMB', 'WAEC + JAMB', 'NECO + JAMB', 'WAEC / NECO only', 'JAMB (UTME) only']
   },
 
   apply: {

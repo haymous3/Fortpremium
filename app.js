@@ -294,6 +294,7 @@
           '<a class="btn btn-ghost btn-sm" href="' + href('programmes') + '">View All →</a>' +
         '</div>' +
         '<div class="prog-grid">' + D.programmes.map(progCard).join('') + '</div>' +
+        smartprepBand() +
       '</section>' +
 
       // stories
@@ -503,6 +504,7 @@
       '</section>' +
       '<section class="container" style="padding-bottom:clamp(20px,3vw,30px)">' +
         '<div class="prog-grid">' + D.programmes.map(progCardTall).join('') + '</div>' +
+        smartprepBand() +
       '</section>' +
       applyBand('Found your path?', 'Applications take about 10 minutes. Tell us where you are now and we will help you choose the right track.', 'Start your application') +
     '</div>';
@@ -648,10 +650,183 @@
     '</div>';
   }
 
+  /* ---------- SmartPrep (WAEC / NECO / JAMB) ---------- */
+  function naira(n) { return '₦' + Number(n).toLocaleString('en-NG'); }
+
+  function options(list, placeholder) {
+    return '<option value="">' + esc(placeholder) + '</option>' +
+      list.map(function (o) { return '<option>' + esc(o) + '</option>'; }).join('');
+  }
+
+  function smartprepPage() {
+    var s = D.smartprep;
+    var adminTotal = s.adminFees.reduce(function (t, f) { return t + f.amount; }, 0);
+    return '<div class="sp">' +
+      '<section class="sp-hero">' +
+        '<div class="container" style="padding-top:clamp(34px,4.5vw,64px);padding-bottom:clamp(34px,4.5vw,64px)">' +
+          '<a class="back" href="' + href('programmes') + '">← All Programmes</a>' +
+          '<div class="tag">' + esc(s.tag) + '</div>' +
+          '<h1>' + esc(s.name) + '</h1>' +
+          '<p>' + esc(s.overview) + '</p>' +
+          '<div class="sp-hero-actions">' +
+            '<button type="button" class="btn sp-btn-light" data-scroll="sp-register">Register Now →</button>' +
+            '<button type="button" class="btn sp-btn-line" data-scroll="sp-fees">View Fees</button>' +
+          '</div>' +
+          '<div class="sp-facts">' +
+            s.facts.map(function (f) {
+              return '<div class="sp-fact"><span class="k">' + esc(f.k) + '</span><span class="v">' + esc(f.v) + '</span><span class="s">' + esc(f.sub) + '</span></div>';
+            }).join('') +
+          '</div>' +
+        '</div>' +
+      '</section>' +
+
+      '<section class="container" style="padding-top:clamp(26px,3vw,40px)">' +
+        '<div class="learner-note sp-perk">' +
+          '<div><strong>' + esc(s.perk.title) + '</strong><span>' + esc(s.perk.body) + '</span></div>' +
+          '<button type="button" class="btn btn-primary btn-sm" data-scroll="sp-register">Claim a spot →</button>' +
+        '</div>' +
+      '</section>' +
+
+      // target capabilities
+      '<section class="container section-lg">' +
+        '<span class="eyebrow" style="color:var(--purple)">TARGET CAPABILITIES</span>' +
+        '<h2 class="section-title" style="margin-top:12px">What every SmartPrep student leaves with</h2>' +
+        '<div class="sp-caps">' +
+          s.capabilities.map(function (c, i) {
+            return '<div class="card sp-cap"><div class="why-num" style="background:' + c.color + '">0' + (i + 1) + '</div><h3>' + esc(c.title) + '</h3><p>' + esc(c.body) + '</p></div>';
+          }).join('') +
+        '</div>' +
+      '</section>' +
+
+      // roadmap
+      '<section class="container section">' +
+        '<span class="eyebrow" style="color:var(--coral)">THE LEARNING ROADMAP</span>' +
+        '<h2 class="section-title" style="margin-top:12px">Eight months, three phases</h2>' +
+        '<ol class="sp-road">' +
+          s.roadmap.map(function (r) {
+            var sched = r.schedule
+              ? '<div class="sp-sched">' + r.schedule.map(function (x) {
+                  return '<div><span class="t">' + esc(x.t) + '</span><span class="d">' + esc(x.d) + '</span></div>';
+                }).join('') + '</div>'
+              : '';
+            return '<li class="sp-step"><div class="sp-when"><span class="ph">' + esc(r.phase) + '</span><span class="dt">' + esc(r.when) + '</span></div>' +
+              '<div class="sp-step-body"><h3>' + esc(r.title) + '</h3><p>' + esc(r.body) + '</p>' + sched + '</div></li>';
+          }).join('') +
+        '</ol>' +
+      '</section>' +
+
+      // strategic objectives
+      '<section class="container section">' +
+        '<div class="stats-band">' +
+          '<h2>Strategic objectives</h2>' +
+          '<p class="lead">The outcomes SmartPrep is built — and measured — to deliver.</p>' +
+          '<div class="sp-goals">' +
+            s.objectives.map(function (o) {
+              return '<div class="sp-goal"><div class="value">' + esc(o.value) + '</div><div class="label">' + esc(o.label) + '</div></div>';
+            }).join('') +
+          '</div>' +
+        '</div>' +
+      '</section>' +
+
+      // fees
+      '<section class="container section-lg" id="sp-fees">' +
+        '<span class="eyebrow" style="color:var(--teal)">FEES &amp; PAYMENT</span>' +
+        '<h2 class="section-title" style="margin-top:12px">Tuition payment pathways</h2>' +
+        '<p class="section-intro">Choose the plan that suits your family. Paying earlier saves more.</p>' +
+        '<div class="sp-plans">' +
+          s.tuition.map(function (t) {
+            var body = t.parts
+              ? '<ul>' + t.parts.map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul>'
+              : '<p>' + esc(t.detail) + '</p>';
+            return '<div class="sp-plan' + (t.best ? ' best' : '') + '">' +
+              (t.best ? '<span class="sp-badge">Best value</span>' : '') +
+              '<h3>' + esc(t.name) + '</h3>' +
+              '<div class="price">' + naira(t.price) + '</div>' +
+              '<div class="per">' + esc(t.per) + '</div>' +
+              body +
+              (t.save ? '<div class="save">Saves ' + naira(t.save) + '</div>' : '') +
+              (t.note ? '<div class="note">' + esc(t.note) + '</div>' : '') +
+            '</div>';
+          }).join('') +
+        '</div>' +
+        '<div class="sp-admin">' +
+          '<div><h3>Administrative fees</h3>' +
+          '<p>Payable once, in addition to tuition.</p></div>' +
+          '<table>' +
+            s.adminFees.map(function (f) {
+              return '<tr><td>' + esc(f.item) + '</td><td>' + naira(f.amount) + '</td></tr>';
+            }).join('') +
+            '<tr class="total"><td>Total (if all apply)</td><td>' + naira(adminTotal) + '</td></tr>' +
+          '</table>' +
+        '</div>' +
+      '</section>' +
+
+      // impact
+      '<section class="container section">' +
+        '<span class="eyebrow" style="color:var(--pink)">PROGRAM IMPACT</span>' +
+        '<h2 class="section-title" style="margin-top:12px">Why parents choose SmartPrep</h2>' +
+        '<div class="sp-impact">' +
+          s.impact.map(function (m) {
+            return '<div class="card-quiet"><h3>' + esc(m.title) + '</h3><p>' + esc(m.body) + '</p></div>';
+          }).join('') +
+        '</div>' +
+      '</section>' +
+
+      // registration
+      '<section class="container section-lg">' +
+        '<div class="sp-reg">' +
+          '<div class="sp-reg-copy">' +
+            '<span class="eyebrow" style="color:var(--purple)">REGISTER</span>' +
+            '<h2>Secure a place for the 2027 exams</h2>' +
+            '<p>Send us the student\'s details and we will call to confirm the place, the payment plan and the start date. Places for the September 2026 intake are limited.</p>' +
+            '<p class="sp-reg-call">Prefer to talk? Call <strong>+234 802 388 2300</strong></p>' +
+          '</div>' +
+          '<form class="form-light" id="sp-register" data-fs="smartprep"' +
+            ' data-subject="New SmartPrep registration — Fortpremium website"' +
+            ' data-success="Thank you — your registration has been received. We will call you shortly to confirm the place." novalidate>' +
+            '<h3>SmartPrep registration</h3>' +
+            '<input name="Student Name" aria-label="Student\'s full name" placeholder="Student\'s full name" autocomplete="name" required/>' +
+            '<input name="Parent / Guardian" aria-label="Parent or guardian name" placeholder="Parent / guardian name (if under 18)"/>' +
+            '<div class="sp-row">' +
+              '<input name="Phone" aria-label="Phone number" placeholder="Phone number" type="tel" autocomplete="tel" required/>' +
+              '<input name="email" aria-label="Email address" placeholder="Email address" type="email" autocomplete="email" required/>' +
+            '</div>' +
+            '<select name="Candidate Type" aria-label="Candidate type" required>' + options(s.candidateTypes, 'Candidate type') + '</select>' +
+            '<div class="sp-row">' +
+              '<select name="Track" aria-label="Track" required>' + options(s.tracks, 'Track') + '</select>' +
+              '<select name="Exams" aria-label="Exams" required>' + options(s.exams, 'Exams to prepare for') + '</select>' +
+            '</div>' +
+            '<select name="Payment Plan" aria-label="Payment plan" required>' +
+              options(s.tuition.map(function (t) { return t.name; }), 'Preferred payment plan') +
+            '</select>' +
+            '<input name="Referral Code" aria-label="Referral code or name" placeholder="Referred by (optional)"/>' +
+            '<button type="submit">Register for SmartPrep →</button>' +
+            '<p class="form-status" role="status" aria-live="polite"></p>' +
+          '</form>' +
+        '</div>' +
+      '</section>' +
+    '</div>';
+  }
+
+  // Feature band pointing to SmartPrep — it is exam prep, not a tech track,
+  // so it sits beside the programme grid rather than inside it.
+  function smartprepBand() {
+    var s = D.smartprep;
+    if (!s) return '';
+    return '<a class="sp-band" href="' + href('smartprep') + '">' +
+      '<div><span class="tag">' + esc(s.tag) + '</span>' +
+      '<h3>' + esc(s.name) + '</h3>' +
+      '<p>8-month exam accelerator with CBT simulation for the 2027 WAEC, NECO and JAMB — from ' +
+        naira(Math.min.apply(null, s.tuition.map(function (t) { return t.price; }))) + ' a month.</p></div>' +
+      '<span class="go">Explore SmartPrep →</span>' +
+    '</a>';
+  }
+
   /* ---------- router ---------- */
   var routes = {
     home: homePage, about: aboutPage, team: teamPage, programmes: programmesPage,
-    involved: involvedPage, careers: careersPage, contact: contactPage
+    involved: involvedPage, careers: careersPage, contact: contactPage,
+    smartprep: smartprepPage
   };
   // which nav item highlights for a given route key
   var activeFor = { programme: 'programmes' };

@@ -70,8 +70,23 @@ key in the same object literal silently overwrites the earlier one:
 - `ecosystemPartners` — the people in "Our Global Ecosystem Partners" (Team page).
 
 ## Routes
-`#/home` · `#/about` · `#/team` · `#/programmes` · `#/programme/<id>` · `#/involved` · `#/careers` · `#/contact` · `#/apply` · `#/apply/<programme-id>` · `#/apply/success`
+`#/home` · `#/about` · `#/team` · `#/programmes` · `#/programme/<id>` · `#/smartprep` · `#/involved` · `#/careers` · `#/contact` · `#/apply` · `#/apply/<programme-id>` · `#/apply/success`
 Programme ids: `padi`, `tlai`, `femtech`, `k12`.
+
+## SmartPrep (`#/smartprep`)
+
+The FortPremium SmartPrep Program (WAEC / NECO / JAMB 2027 exam prep) has its
+own page, because it is not a tech track and does not fit the six-step
+application form. All of its copy, fees, roadmap and dropdown options live in
+the `smartprep` block of `data.js`; fee amounts are plain numbers and are
+formatted as naira on the page (the admin-fee total is added up automatically).
+
+The page ends with a short registration form that goes to
+`formEmails.smartprep` (**fortpremiumforms@gmail.com**). That address needs
+its own one-time FormSubmit activation: submit the form once from the live
+site and click the link FormSubmit emails to it. SmartPrep has its own item in
+the main menu, and a band linking to the page appears under the programme grid
+on Home and Programmes, and in the footer's Quick Links.
 
 ## Application form (`#/apply`)
 

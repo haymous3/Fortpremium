@@ -71,7 +71,7 @@ main { flex: 1; }
 .btn-ghost { background: #fff; color: var(--ink); border: 1px solid var(--line-2); }
 .btn-ghost:hover { border-color: var(--ink); }
 .btn-sm { padding: 12px 22px; font-size: 14px; }
-.btn-pill-dark { background: var(--ink); color: #fff; font-weight: 700; font-size: 14px; padding: 11px 20px; border: none; border-radius: 999px; cursor: pointer; transition: background .15s; }
+.btn-pill-dark { white-space: nowrap; background: var(--ink); color: #fff; font-weight: 700; font-size: 14px; padding: 11px 20px; border: none; border-radius: 999px; cursor: pointer; transition: background .15s; }
 .btn-pill-dark:hover { background: var(--purple); }
 /* Links styled as buttons: the global `a:hover` colour is more specific than
    `.btn-primary` etc., so pin the text colour back on hover. */
@@ -99,7 +99,7 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .brand-name { font-family: 'Space Grotesk'; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; color: var(--brand); }
 .brand-sub { font-size: 10px; letter-spacing: 0.22em; color: var(--muted-2); font-weight: 600; }
 .nav-links { display: flex; align-items: center; gap: clamp(14px, 2vw, 26px); }
-.nav-link { cursor: pointer; font-family: 'Manrope'; font-weight: 600; font-size: 15px; color: #7a7888; transition: color .15s; background: none; border: none; padding: 0; }
+.nav-link { cursor: pointer; white-space: nowrap; font-family: 'Manrope'; font-weight: 600; font-size: 15px; color: #7a7888; transition: color .15s; background: none; border: none; padding: 0; }
 .nav-link:hover { color: var(--ink); }
 .nav-link.active { color: var(--ink); }
 .hamburger { border: 1px solid #e2dfd6; background: #fff; cursor: pointer; width: 46px; height: 46px; border-radius: 12px; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 0; margin-left: auto; }
@@ -119,11 +119,14 @@ a.btn-ghost, a.btn-ghost:hover { color: var(--ink); }
 .mobile-menu .nav-link { font-size: 16px; color: #3a3a46; padding: 14px 4px; border-bottom: 1px solid #efece4; text-align: left; }
 .mobile-apply { margin-top: 16px; }
 
-@media (max-width: 899px) {
+/* Eight menu items need ~1100px; below that the header switches to the hamburger. */
+@media (max-width: 1099px) {
   /* the 46px hamburger is taller than the brand badge, so the bar grows a little */
   :root { --header-h: 76px; }
   .nav-links, .nav-apply { display: none; }
-  .hamburger { display: flex; }
+  /* the brand's auto margin already pushes these right; a second auto margin
+     would strand the Apply button mid-bar */
+  .hamburger { display: flex; margin-left: 0; }
 }
 
 /* ---------- generic cards ---------- */
@@ -723,4 +726,102 @@ body.no-scroll { overflow: hidden; }
 .footer-anniv .yrs {
   font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 13px; line-height: 1;
   background: var(--amber); color: var(--ink); border-radius: 999px; padding: 5px 9px;
+}
+
+/* =========================================================
+   SmartPrep — WAEC / NECO / JAMB programme (#/smartprep)
+   ========================================================= */
+.sp-hero { background: linear-gradient(135deg, var(--brand) 0%, #1a1a8f 55%, #2b1f6b 100%); color: #fff; }
+.sp-hero .back { display: block; width: fit-content; font-weight: 700; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.sp-hero .back:hover { color: #fff; }
+.sp-hero .tag { display: inline-flex; background: var(--amber); color: var(--ink); font-weight: 800; font-size: 12px; letter-spacing: 0.04em; padding: 6px 14px; border-radius: 999px; margin-top: 24px; }
+.sp-hero h1 { font-size: clamp(32px, 4.6vw, 56px); color: #fff; margin-top: 16px; max-width: 820px; }
+.sp-hero p { font-size: clamp(16px, 1.6vw, 19px); color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-top: 18px; max-width: 760px; }
+.sp-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.sp-btn-light { background: #fff; color: var(--ink); }
+.sp-btn-light:hover { background: var(--amber); }
+.sp-btn-line { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.5); }
+.sp-btn-line:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
+.sp-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: clamp(28px, 4vw, 44px); }
+.sp-fact { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 16px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+.sp-fact .k { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); }
+.sp-fact .v { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 18px; }
+.sp-fact .s { font-size: 13.5px; color: rgba(255, 255, 255, 0.75); }
+
+.sp-perk { background: #fff7e6; border-color: #f6dca3; }
+
+.sp-caps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+
+.sp-road { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 16px; }
+.sp-step { display: grid; grid-template-columns: 200px 1fr; gap: 24px; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: clamp(20px, 2.6vw, 30px); }
+.sp-when { display: flex; flex-direction: column; gap: 6px; border-right: 2px solid var(--line); padding-right: 20px; }
+.sp-when .ph { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 500; color: var(--coral); letter-spacing: 0.04em; text-transform: uppercase; }
+.sp-when .dt { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: 20px; }
+.sp-step-body h3 { font-size: 21px; }
+.sp-step-body p { color: var(--muted); font-size: 15.5px; line-height: 1.6; margin-top: 8px; }
+.sp-sched { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.sp-sched > div { background: var(--brand-tint); border-radius: 12px; padding: 10px 14px; display: flex; flex-direction: column; gap: 2px; }
+.sp-sched .t { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--brand); }
+.sp-sched .d { font-size: 14px; color: var(--ink); }
+
+.sp-goals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+.sp-goal { border-left: 3px solid var(--amber); padding: 4px 0 4px 18px; }
+.sp-goal .value { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: clamp(34px, 4vw, 48px); line-height: 1; }
+.sp-goal .label { font-size: 15px; line-height: 1.5; margin-top: 10px; opacity: 0.85; }
+
+.sp-plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 30px; align-items: stretch; }
+.sp-plan { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px; display: flex; flex-direction: column; }
+.sp-plan.best { border: 2px solid var(--brand); box-shadow: 0 18px 40px -24px rgba(5, 4, 170, 0.45); }
+.sp-badge { position: absolute; top: -12px; left: 24px; background: var(--brand); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; padding: 5px 12px; border-radius: 999px; }
+.sp-plan h3 { font-size: 19px; }
+.sp-plan .price { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; font-size: clamp(30px, 3.2vw, 38px); margin-top: 14px; letter-spacing: -0.02em; }
+.sp-plan .per { color: var(--muted); font-size: 14px; margin-top: 2px; }
+.sp-plan p, .sp-plan ul { color: var(--muted); font-size: 15px; line-height: 1.6; margin-top: 16px; }
+.sp-plan ul { padding-left: 18px; margin-bottom: 0; }
+.sp-plan .save { margin-top: auto; padding-top: 18px; color: #0f7a58; font-weight: 800; font-size: 14px; }
+.sp-plan .note { margin-top: auto; padding-top: 18px; font-size: 13px; font-style: italic; color: var(--muted-2); }
+
+.sp-admin { margin-top: 22px; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: clamp(22px, 3vw, 30px); display: grid; grid-template-columns: 1fr minmax(0, 1.4fr); gap: 10px 30px; align-items: start; }
+.sp-admin h3 { font-size: 19px; }
+.sp-admin p { color: var(--muted); font-size: 14.5px; margin-top: 6px; }
+.sp-admin table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.sp-admin td { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.sp-admin td:last-child { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sp-admin tr.total td { border-bottom: none; padding-top: 14px; font-weight: 800; }
+
+.sp-impact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+.sp-impact h3 { font-size: 19px; }
+.sp-impact p { color: var(--muted); font-size: 15px; line-height: 1.6; margin-top: 10px; }
+
+.sp-reg { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.sp-reg-copy h2 { font-size: clamp(28px, 3.4vw, 42px); margin-top: 12px; }
+.sp-reg-copy p { color: var(--muted); font-size: 16px; line-height: 1.65; margin-top: 16px; }
+.sp-reg-copy .sp-reg-call { color: var(--ink); }
+.sp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.sp-row > * { min-width: 0; }
+.form-light select { border: 1px solid #e2dfd6; border-radius: 12px; padding: 14px 16px; font-family: 'Manrope'; font-size: 15px; background: var(--paper); color: var(--ink); width: 100%; }
+.form-light select:invalid { color: var(--muted-2); }
+
+/* feature band on Home + Programmes pointing to SmartPrep */
+.sp-band { margin-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; background: linear-gradient(135deg, var(--brand), #2b1f6b); color: #fff; border-radius: 22px; padding: clamp(22px, 3vw, 32px) clamp(22px, 3vw, 36px); }
+.sp-band:hover { color: #fff; }
+.sp-band > div { max-width: 720px; }
+.sp-band .tag { display: inline-flex; background: var(--amber); color: var(--ink); font-weight: 800; font-size: 12px; padding: 5px 12px; border-radius: 999px; }
+.sp-band h3 { font-size: clamp(21px, 2.4vw, 27px); color: #fff; margin-top: 12px; }
+.sp-band p { color: rgba(255, 255, 255, 0.85); font-size: 15px; line-height: 1.55; margin-top: 8px; }
+.sp-band .go { background: #fff; color: var(--ink); font-weight: 700; font-size: 14px; padding: 12px 20px; border-radius: 999px; white-space: nowrap; transition: background .15s; }
+.sp-band:hover .go { background: var(--amber); }
+
+@media (max-width: 1040px) {
+  .sp-caps, .sp-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .sp-plans, .sp-impact, .sp-goals, .sp-reg { grid-template-columns: 1fr; }
+  .sp-plans { gap: 24px; }
+  .sp-admin { grid-template-columns: 1fr; }
+  .sp-step { grid-template-columns: 1fr; gap: 12px; }
+  .sp-when { border-right: none; padding-right: 0; flex-direction: row; align-items: baseline; gap: 12px; }
+}
+@media (max-width: 560px) {
+  .sp-caps, .sp-facts, .sp-row { grid-template-columns: 1fr; }
 }
